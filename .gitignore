@@ -1,5 +1,7 @@
 *.log
+*.tsbuildinfo
 
 .idea/
 .vscode/
+lib/
 node_modules/
