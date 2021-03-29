@@ -1,0 +1,33 @@
+{
+  "name": "@herberttn/bytenode-webpack-plugin",
+  "description": "Compile JavaScript into bytecode using bytenode",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "github:herberttn/bytenode-webpack-plugin"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "herberttn",
+    "url": "https://github.com/herberttn"
+  },
+  "homepage": "https://github.com/herberttn/bytenode-webpack-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/herberttn/bytenode-webpack-plugin/issues"
+  },
+  "keywords": [
+    "bytecode",
+    "bytenode",
+    "compile",
+    "javascript",
+    "js",
+    "node",
+    "nodejs",
+    "plugin",
+    "webpack"
+  ]
+}
