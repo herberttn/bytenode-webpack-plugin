@@ -5,3 +5,4 @@
 .vscode/
 lib/
 node_modules/
+test/output/

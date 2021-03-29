@@ -11,8 +11,10 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "run-s lint build:ts",
-    "build:ts": "tsc --build tsconfig.json",
-    "lint": "eslint . --ext .js,.ts --cache --max-warnings 0"
+    "build:ts": "tsc --build tsconfig.project.json",
+    "clean": "rimraf lib **/.eslintcache **/*.log **/*.tsbuildinfo",
+    "lint": "eslint . --ext .js,.ts --cache --max-warnings 0",
+    "test": "jest --config jest.config.ts --detectOpenHandles"
   },
   "dependencies": {
     "bytenode": "^1.2.0",
@@ -20,14 +22,20 @@
     "webpack-virtual-modules": "^0.4.2"
   },
   "devDependencies": {
+    "@jest/types": "26.6.2",
+    "@types/jest": "26.0.22",
     "@types/webpack": "^4.41.27",
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
     "eslint": "7.23.0",
     "eslint-plugin-import": "2.22.1",
+    "jest": "26.6.3",
     "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
-    "typescript": "4.2.3"
+    "ts-jest": "26.5.4",
+    "ts-node": "9.1.1",
+    "typescript": "4.2.3",
+    "webpack-merge": "5.7.3"
   },
   "author": {
     "name": "herberttn",

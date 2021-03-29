@@ -10,7 +10,10 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.json',
+    project: [
+      'tsconfig.project.json',
+      'tsconfig.test.json',
+    ],
     warnOnUnsupportedTypeScriptVersion: true,
   },
   plugins: [
