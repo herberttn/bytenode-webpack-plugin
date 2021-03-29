@@ -14,7 +14,8 @@ module.exports = {
     warnOnUnsupportedTypeScriptVersion: true,
   },
   plugins: [
-    '@typescript-eslint'
+    '@typescript-eslint',
+    'import',
   ],
   root: true,
   rules: commonRules(),
@@ -41,6 +42,34 @@ function commonRules() {
     'computed-property-spacing': ['error', 'never'],
     'eol-last': ['error', 'always'],
     'linebreak-style': ['error', 'unix'],
+    'import/extensions': ['error', {
+      js: 'never',
+      json: 'always',
+    }],
+    'import/first': 'error',
+    'import/namespace': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-absolute-path': 'error',
+    'import/no-deprecated': 'error',
+    'import/no-duplicates': 'error',
+    'import/no-mutable-exports': 'error',
+    'import/no-self-import': 'error',
+    'import/no-useless-path-segments': 'error',
+    'import/order': ['error', {
+      alphabetize: {
+        caseInsensitive: true,
+        order: 'asc',
+      },
+      groups: [
+        'builtin',
+        'external',
+        'internal',
+        'parent',
+        'sibling',
+        'index',
+      ],
+      'newlines-between': 'always',
+    }],
     'no-multiple-empty-lines': ['error', {
       max: 1,
       maxBOF: 0,
@@ -84,6 +113,7 @@ function overrideForTypeScriptFiles() {
       'plugin:@typescript-eslint/eslint-recommended',
       'plugin:@typescript-eslint/recommended',
       'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      'plugin:import/typescript',
     ],
     rules: {
       '@typescript-eslint/ban-ts-comment': ['off', {

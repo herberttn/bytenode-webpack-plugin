@@ -9,8 +9,8 @@ import type { WebpackPluginInstance } from 'webpack';
 import type { Source } from 'webpack-sources';
 import WebpackVirtualModules from 'webpack-virtual-modules';
 
-import type { Options, Prepared, PreprocessedEntry, PreprocessedOutput, ProcessedOptions } from './types';
 import type { Compiler, EntryPoint, WebpackOptionsNormalized } from './normalized';
+import type { Options, Prepared, PreprocessedEntry, PreprocessedOutput, ProcessedOptions } from './types';
 
 v8.setFlagsFromString('--no-lazy');
 
