@@ -8,6 +8,7 @@
     "url": "github:herberttn/bytenode-webpack-plugin"
   },
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "build": "run-s lint build:ts",
     "build:ts": "tsc --build tsconfig.json",
