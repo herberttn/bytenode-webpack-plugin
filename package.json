@@ -14,7 +14,13 @@
     "build:ts": "tsc --build tsconfig.json",
     "lint": "eslint . --ext .js,.ts --cache --max-warnings 0"
   },
+  "dependencies": {
+    "bytenode": "^1.2.0",
+    "webpack": "^4.46.0",
+    "webpack-virtual-modules": "^0.4.2"
+  },
   "devDependencies": {
+    "@types/webpack": "^4.41.27",
     "@typescript-eslint/eslint-plugin": "4.19.0",
     "@typescript-eslint/parser": "4.19.0",
     "eslint": "7.23.0",
