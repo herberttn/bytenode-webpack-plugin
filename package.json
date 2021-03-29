@@ -41,6 +41,12 @@
     "name": "herberttn",
     "url": "https://github.com/herberttn"
   },
+  "contributors": [
+    {
+      "name": "jjeff",
+      "url": "https://github.com/jjeff"
+    }
+  ],
   "homepage": "https://github.com/herberttn/bytenode-webpack-plugin#readme",
   "bugs": {
     "url": "https://github.com/herberttn/bytenode-webpack-plugin/issues"
