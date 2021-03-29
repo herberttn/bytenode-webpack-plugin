@@ -9,10 +9,14 @@
   },
   "main": "lib/index.js",
   "scripts": {
-    "build": "run-s build:ts",
-    "build:ts": "tsc --build tsconfig.json"
+    "build": "run-s lint build:ts",
+    "build:ts": "tsc --build tsconfig.json",
+    "lint": "eslint . --ext .js,.ts --cache --max-warnings 0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "4.19.0",
+    "@typescript-eslint/parser": "4.19.0",
+    "eslint": "7.23.0",
     "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
     "typescript": "4.2.3"
