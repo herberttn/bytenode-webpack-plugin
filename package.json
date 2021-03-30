@@ -17,7 +17,7 @@
     "test": "jest --config jest.config.ts --detectOpenHandles"
   },
   "dependencies": {
-    "bytenode": "^1.2.0",
+    "bytenode": "^1.2.1",
     "webpack": "^4.46.0",
     "webpack-virtual-modules": "^0.4.2"
   },
