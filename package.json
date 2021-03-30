@@ -10,12 +10,14 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "run-s lint build:ts",
-    "build:ts": "tsc --build tsconfig.project.json",
+    "all": "npm-run-all",
+    "build": "tsc --build tsconfig.project.json",
+    "build:watch": "npm run build -- --watch",
     "clean": "rimraf lib **/.eslintcache **/*.log **/*.tsbuildinfo",
     "lint": "eslint . --ext .js,.ts --cache --max-warnings 0",
     "test": "jest --config jest.config.ts --detectOpenHandles",
-    "test:coverage": "npm run test -- --coverage"
+    "test:coverage": "npm run test -- --coverage",
+    "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
     "bytenode": "^1.2.1",
