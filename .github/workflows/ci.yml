@@ -11,8 +11,12 @@ on:
       - '**.md'
 
 jobs:
-  lint-build-test:
+
+  task:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        task: [lint, build, test]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -25,6 +29,4 @@ jobs:
           restore-keys: |
             npm-${{ runner.os }}-
       - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test
+      - run: npm run ${{ matrix.task }}
