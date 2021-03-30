@@ -6,6 +6,7 @@
   },
   "exclude": [
     "jest.config.ts",
+    "lib",
     "test"
   ]
 }

@@ -1,8 +1,11 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.project.json",
   "include": [
     "jest.config.ts",
     "src",
     "test"
+  ],
+  "exclude": [
+    "lib"
   ]
 }
