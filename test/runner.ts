@@ -5,7 +5,7 @@ import webpack from 'webpack';
 import type { Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
 
-// import { BytenodeWebpackPlugin } from '../src';
+import { BytenodeWebpackPlugin } from '../src';
 
 const defaultOptions: Configuration = {
   context: __dirname,
@@ -14,7 +14,7 @@ const defaultOptions: Configuration = {
     path: resolve(__dirname, './output'),
   },
   plugins: [
-    // new BytenodeWebpackPlugin(),
+    new BytenodeWebpackPlugin(),
   ],
   target: 'node',
 };
