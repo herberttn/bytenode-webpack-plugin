@@ -27,6 +27,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       debugLogs: false,
       keepSource: false,
       preventSourceMaps: true,
+      silent: false,
       ...options,
     };
   }
@@ -257,7 +258,9 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
   }
 
   debug(title: unknown, data: unknown, ...rest: unknown[]): void {
-    if (!this.options.debugLogs) {
+    const { debugLogs, silent } = this.options;
+
+    if (!debugLogs || silent) {
       return;
     }
 
@@ -273,11 +276,16 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
   }
 
   log(...messages: unknown[]): void {
+    if (this.options.silent) {
+      return;
+    }
     console.debug(`[${this.name}]:`, ...messages);
   }
 
   setupLifecycleLogging(compiler: Compiler): void {
-    if (!this.options.debugLifecycle) {
+    const { debugLifecycle, silent } = this.options;
+
+    if (!debugLifecycle || silent) {
       return;
     }
 
@@ -294,6 +302,11 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
   setupHooksLogging(type: string, hooks: Record<string, Hook>): void {
     const pluginName = this.name;
+    const { debugLifecycle, silent } = this.options;
+
+    if (!debugLifecycle || silent) {
+      return;
+    }
 
     for (const [name, hook] of Object.entries(hooks)) {
       try {

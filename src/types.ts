@@ -5,6 +5,7 @@ interface Options {
   debugLogs: boolean;
   keepSource: boolean;
   preventSourceMaps: boolean;
+  silent: boolean;
 }
 
 interface Prepared {

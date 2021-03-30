@@ -14,7 +14,9 @@ const defaultOptions: Configuration = {
     path: resolve(__dirname, './output'),
   },
   plugins: [
-    new BytenodeWebpackPlugin(),
+    new BytenodeWebpackPlugin({
+      silent: true,
+    }),
   ],
   target: 'node',
 };
