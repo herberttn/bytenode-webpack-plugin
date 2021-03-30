@@ -7,7 +7,24 @@ describe('entry as a string', () => {
       entry: './input/first.js',
     });
 
-    expect(assets).toStrictEqual(['main.js']);
+    expect(assets).toStrictEqual([
+      'first.compiled.jsc',
+      'first.js',
+    ]);
+  });
+
+  test('should support naming the output', async () => {
+    const assets = await runWebpack({
+      entry: './input/first.js',
+      output: {
+        filename: 'named.js',
+      },
+    });
+
+    expect(assets).toStrictEqual([
+      'first.compiled.jsc',
+      'named.js',
+    ]);
   });
 
 });
