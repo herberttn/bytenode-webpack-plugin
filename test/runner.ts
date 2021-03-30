@@ -21,7 +21,7 @@ const defaultOptions: Configuration = {
   target: 'node',
 };
 
-async function runWebpack(options: Configuration): Promise<string[]> {
+async function runWebpack(options: Configuration): Promise<string[] | undefined> {
   options = merge(defaultOptions, options);
 
   if (typeof options.output?.path !== 'string') {
@@ -35,19 +35,14 @@ async function runWebpack(options: Configuration): Promise<string[]> {
 
   return new Promise((resolve, reject) => {
     webpack(options, (error, stats) => {
-      if (error) {
-        reject(error);
-      } else if (stats.hasErrors()) {
-        reject(stats.toString());
+      if (error || stats.hasErrors()) {
+        reject(error ?? stats.toString());
       }
 
-      const assets = stats
-        ?.toJson()
-        ?.assets
-        ?.map(asset => asset.name)
-        ?? [];
+      const { assets } = stats.toJson();
+      const names = assets?.map(asset => asset.name);
 
-      resolve(assets);
+      resolve(names);
     });
   });
 }
