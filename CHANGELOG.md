@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.0.0...v1.0.1) (2021-03-31)
+
+
+### Bug Fixes
+
+* need to build before publishing obviously ([fead0bd](https://github.com/herberttn/bytenode-webpack-plugin/commit/fead0bd4b470f5e5b9d8a033e380c7c477a371b0))
+
 # 1.0.0 (2021-03-31)
 
 
