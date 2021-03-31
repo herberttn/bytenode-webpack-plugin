@@ -1,30 +1,32 @@
-## @herberttn/bytenode-webpack-plugin
-Compile JavaScript into bytecode using [bytenode](https://www.npmjs.com/package/bytenode).  
-Inspired by [bytenode-webpack-plugin](https://www.npmjs.com/package/bytenode-webpack-plugin).
+@herberttn/bytenode-webpack-plugin
+---
+
+Compile JavaScript into bytecode using [`bytenode`][link-to-bytenode].  
+Inspired by [`bytenode-webpack-plugin`][link-to-bytenode-webpack-plugin].
+
+[link-to-bytenode-webpack-plugin]: https://www.npmjs.com/package/bytenode-webpack-plugin
+[link-to-bytenode]: https://www.npmjs.com/package/bytenode
 
 ### Install
 ```shell
 npm install --save @herberttn/bytenode-webpack-plugin
 ```
 
-### Webpack support
-#### Versions
-|Supported|Version range|
-|:---:|---|
-|:x:|< 4|
-|:heavy_check_mark:|\> 4 < 5|
-|:grey_question:|\> 5|
+### Supports
+- [`electron-forge`][link-to-electron-forge]
+  - :heavy_check_mark:  Default configuration
+- [`webpack`][link-to-webpack]
+  - :heavy_check_mark:  v4
+  - :grey_question:  v5
+  - :heavy_check_mark:   `entry` as a `string` (e.g., `'src/index.js'`)
+  - :heavy_exclamation_mark:   `entry` as an `array` (e.g., `['src/index.js']`)
+  - :heavy_check_mark:   `entry` as an `object` (e.g., `{ main: 'src/index.js' }`)
+  - :heavy_exclamation_mark:   `entry` middlewares (e.g., `['src/index.js', 'webpack-hot-middleware/client']`)
+  - :heavy_check_mark:   Dynamic `output.filename` (e.g., `'[name].js'`)
+  - :heavy_check_mark:   Named `output.filename` (e.g., `'index.js'`)
 
-#### Features
-|Supported|Entry type|Output type|
-|:---:|---|---|
-|:grey_question:|one or more, as an `array`|dynamic or named|
-|:heavy_check_mark:|one or more, as an `object`|dynamic or named|
-|:heavy_check_mark:|one or more, as an `string`|dynamic or named|
-
-Examples:
-- Dynamic output filename: `[name].js`  
-- Named output filename: `index.js`
+[link-to-electron-forge]: https://www.npmjs.com/package/electron-forge
+[link-to-webpack]: https://www.npmjs.com/package/webpack
 
 ### Usage
 ```javascript
