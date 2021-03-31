@@ -1,6 +1,17 @@
 @herberttn/bytenode-webpack-plugin
 ---
 
+[![ci][badge-workflow-ci]][badge-workflow-ci-link]
+[![npm][badge-npm]][badge-npm-link]
+[![license][badge-license]][badge-license-link]
+
+[badge-npm]: https://img.shields.io/npm/v/@herberttn/bytenode-webpack-plugin
+[badge-npm-link]: https://www.npmjs.com/package/@herberttn/bytenode-webpack-plugin
+[badge-license]: https://img.shields.io/github/license/herberttn/bytenode-webpack-plugin
+[badge-license-link]: LICENSE
+[badge-workflow-ci]: https://github.com/herberttn/bytenode-webpack-plugin/actions/workflows/ci.yml/badge.svg?branch=main&event=push
+[badge-workflow-ci-link]: https://github.com/herberttn/bytenode-webpack-plugin/actions/workflows/ci.yml
+
 Compile JavaScript into bytecode using [`bytenode`][link-to-bytenode].  
 Inspired by [`bytenode-webpack-plugin`][link-to-bytenode-webpack-plugin].
 
