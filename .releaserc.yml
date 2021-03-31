@@ -1,0 +1,15 @@
+branches:
+  - main
+plugins:
+  - - '@semantic-release/commit-analyzer'
+    - releaseRules:
+      # rules that do not match will fallback to the defaults, which
+      # already handles feat, fix, perf, breaking changes and reverts
+      - { type: docs, release: patch }
+      - { type: refactor, release: minor }
+      - { type: test, release: patch }
+  - '@semantic-release/release-notes-generator'
+  - '@semantic-release/changelog'
+  - '@semantic-release/npm'
+  - '@semantic-release/git'
+  - '@semantic-release/github'
