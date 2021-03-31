@@ -1,7 +1,7 @@
 {
   "name": "@herberttn/bytenode-webpack-plugin",
   "description": "Compile JavaScript into bytecode using bytenode",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
