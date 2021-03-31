@@ -42,6 +42,7 @@ jobs:
           restore-keys: |
             npm-${{ runner.os }}-
       - run: npm ci
+      - run: npm run build
       - run: npm run release
         env:
           GITHUB_TOKEN: ${{ github.token }}
