@@ -19,8 +19,7 @@
     "clean": "rimraf lib **/.eslintcache **/*.log **/*.tsbuildinfo",
     "lint": "eslint . --ext .js,.ts --cache --max-warnings 0",
     "release": "semantic-release",
-    "test": "jest --config jest.config.ts --detectOpenHandles",
-    "test:coverage": "npm run test -- --coverage",
+    "test": "jest --config jest.config.ts --coverage --detectOpenHandles",
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
