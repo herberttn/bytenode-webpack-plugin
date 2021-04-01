@@ -5,8 +5,8 @@ import webpack from 'webpack';
 import type { Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
 
-import { BytenodeWebpackPlugin } from '../src';
-import type { Options } from '../src/types';
+import { BytenodeWebpackPlugin } from '../../src';
+import type { Options } from '../../src/types';
 
 const defaultWebpackOptions: Configuration = {
   context: __dirname,
