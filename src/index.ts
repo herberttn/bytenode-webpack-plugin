@@ -264,14 +264,14 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       }
     }
 
-    this.log(title, data, ...rest);
+    console.debug(title, data, ...rest);
   }
 
   log(...messages: unknown[]): void {
     if (this.options.silent) {
       return;
     }
-    console.debug(`[${this.name}]:`, ...messages);
+    console.log(`[${this.name}]:`, ...messages);
   }
 
   setupLifecycleLogging(compiler: Compiler): void {
