@@ -6,35 +6,41 @@ import type { Configuration } from 'webpack';
 import { merge } from 'webpack-merge';
 
 import { BytenodeWebpackPlugin } from '../src';
+import type { Options } from '../src/types';
 
-const defaultOptions: Configuration = {
+const defaultWebpackOptions: Configuration = {
   context: __dirname,
   mode: 'development',
   output: {
     path: resolve(__dirname, './output'),
   },
-  plugins: [
-    new BytenodeWebpackPlugin({
-      silent: true,
-    }),
-  ],
+  plugins: [],
   target: 'node',
 };
 
-async function runWebpack(options: Configuration): Promise<string[] | undefined> {
-  options = merge(defaultOptions, options);
+const defaultPluginOptions: Partial<Options> = {
+  silent: true,
+};
 
-  if (typeof options.output?.path !== 'string') {
+async function runWebpack(webpackOptions: Configuration, pluginOptions?: Partial<Options>): Promise<string[] | undefined> {
+  pluginOptions = { ...defaultPluginOptions, ...pluginOptions };
+  webpackOptions = merge(defaultWebpackOptions, webpackOptions, {
+    plugins: [
+      new BytenodeWebpackPlugin(pluginOptions),
+    ],
+  });
+
+  if (typeof webpackOptions.output?.path !== 'string') {
     throw new Error('output.path should be defined');
   }
 
-  await rm(options.output.path, {
+  await rm(webpackOptions.output.path, {
     force: true,
     recursive: true,
   });
 
   return new Promise((resolve, reject) => {
-    webpack(options, (error, stats) => {
+    webpack(webpackOptions, (error, stats) => {
       if (error || stats.hasErrors()) {
         reject(error ?? stats.toString());
       }
