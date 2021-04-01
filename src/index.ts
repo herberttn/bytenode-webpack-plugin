@@ -17,7 +17,7 @@ v8.setFlagsFromString('--no-lazy');
 class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
   private readonly name = 'BytenodeWebpackPlugin';
-  private options: Options;
+  private readonly options: Options;
 
   constructor(options: Partial<Options> = {}) {
     this.options = {
