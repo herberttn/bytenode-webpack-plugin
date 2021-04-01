@@ -214,7 +214,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
     let entries: [string | undefined, string | string[]][];
 
     if (typeof entry === 'function') {
-      throw new Error('');
+      throw new Error('Entry as a function is not supported as of yet.');
     }
 
     if (typeof entry === 'string') {
