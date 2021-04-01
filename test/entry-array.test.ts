@@ -4,7 +4,7 @@ describe('entry as an array of strings', () => {
 
   test('should support 1 entry', async () => {
     const assets = await runWebpack({
-      entry: ['./input/first.js'],
+      entry: ['./fixtures/first.js'],
     });
 
     expect(assets).toStrictEqual([
@@ -15,7 +15,7 @@ describe('entry as an array of strings', () => {
 
   test('should support 1 entry while naming the output', async () => {
     const assets = await runWebpack({
-      entry: ['./input/first.js'],
+      entry: ['./fixtures/first.js'],
       output: {
         filename: 'named.js',
       },
@@ -29,7 +29,7 @@ describe('entry as an array of strings', () => {
 
   test('should support N entries', async () => {
     const assets = await runWebpack({
-      entry: ['./input/first.js', './input/second.js', './input/third.js'],
+      entry: ['./fixtures/first.js', './fixtures/second.js', './fixtures/third.js'],
     });
 
     expect(assets).toStrictEqual([
@@ -44,7 +44,7 @@ describe('entry as an array of strings', () => {
 
   test('should support N entries while naming the output', async () => {
     const assets = await runWebpack({
-      entry: ['./input/first.js', './input/second.js', './input/third.js'],
+      entry: ['./fixtures/first.js', './fixtures/second.js', './fixtures/third.js'],
       output: {
         filename: 'named.js',
       },
@@ -65,7 +65,7 @@ describe('entry as an object of arrays', () => {
   test('should support 1 array of 1 entry', async () => {
     const assets = await runWebpack({
       entry: {
-        first: ['./input/first.js'],
+        first: ['./fixtures/first.js'],
       },
     });
 
@@ -77,7 +77,7 @@ describe('entry as an object of arrays', () => {
 
   test('should support 1 array of 1 entry while naming the output', async () => {
     const assets = await runWebpack({
-      entry: ['./input/first.js'],
+      entry: ['./fixtures/first.js'],
       output: {
         filename: 'named.js',
       },
@@ -92,7 +92,7 @@ describe('entry as an object of arrays', () => {
   test('should support 1 array of N entries', async () => {
     const assets = await runWebpack({
       entry: {
-        named: ['./input/first.js', './input/second.js', './input/third.js'],
+        named: ['./fixtures/first.js', './fixtures/second.js', './fixtures/third.js'],
       },
     });
 
@@ -105,7 +105,7 @@ describe('entry as an object of arrays', () => {
   test('should support 1 array of N entries while naming the output', async () => {
     const assets = await runWebpack({
       entry: {
-        named: ['./input/first.js', './input/second.js', './input/third.js'],
+        named: ['./fixtures/first.js', './fixtures/second.js', './fixtures/third.js'],
       },
       output: {
         filename: 'index.js',
@@ -121,9 +121,9 @@ describe('entry as an object of arrays', () => {
   test('should support N arrays of 1 entry', async () => {
     const assets = await runWebpack({
       entry: {
-        firstNamed: ['./input/first.js'],
-        secondNamed: ['./input/second.js'],
-        thirdNamed: ['./input/third.js'],
+        firstNamed: ['./fixtures/first.js'],
+        secondNamed: ['./fixtures/second.js'],
+        thirdNamed: ['./fixtures/third.js'],
       },
     });
 
@@ -140,9 +140,9 @@ describe('entry as an object of arrays', () => {
   test('should support N arrays of 1 entry while naming the output', async () => {
     const assets = await runWebpack({
       entry: {
-        firstNamed: ['./input/first.js'],
-        secondNamed: ['./input/second.js'],
-        thirdNamed: ['./input/third.js'],
+        firstNamed: ['./fixtures/first.js'],
+        secondNamed: ['./fixtures/second.js'],
+        thirdNamed: ['./fixtures/third.js'],
       },
       output: {
         filename: 'index.js',
@@ -160,8 +160,8 @@ describe('entry as an object of arrays', () => {
   test('should support N arrays of N entries', async () => {
     const assets = await runWebpack({
       entry: {
-        firstNamed: ['./input/first.js'],
-        mixNamed: ['./input/second.js', './input/third.js'],
+        firstNamed: ['./fixtures/first.js'],
+        mixNamed: ['./fixtures/second.js', './fixtures/third.js'],
       },
     });
 
@@ -176,8 +176,8 @@ describe('entry as an object of arrays', () => {
   test('should support N arrays of N entries while naming the output', async () => {
     const assets = await runWebpack({
       entry: {
-        firstNamed: ['./input/first.js'],
-        mixNamed: ['./input/second.js', './input/third.js'],
+        firstNamed: ['./fixtures/first.js'],
+        mixNamed: ['./fixtures/second.js', './fixtures/third.js'],
       },
       output: {
         filename: 'index.js',

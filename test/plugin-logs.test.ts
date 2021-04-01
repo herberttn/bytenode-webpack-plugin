@@ -1,7 +1,7 @@
 import { runWebpack } from './runner';
 
 const webpackOptions = {
-  entry: './input/first.js',
+  entry: './fixtures/first.js',
 };
 
 describe('debugLifecycle', () => {

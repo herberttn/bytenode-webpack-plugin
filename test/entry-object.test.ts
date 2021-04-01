@@ -5,7 +5,7 @@ describe('entry as an object', () => {
   test('should support one named entry', async () => {
     const assets = await runWebpack({
       entry: {
-        named: './input/first.js',
+        named: './fixtures/first.js',
       },
     });
 
@@ -18,7 +18,7 @@ describe('entry as an object', () => {
   test('should support one named entry while naming the output', async () => {
     const assets = await runWebpack({
       entry: {
-        named: './input/first.js',
+        named: './fixtures/first.js',
       },
       output: {
         filename: 'index.js',
@@ -34,9 +34,9 @@ describe('entry as an object', () => {
   test('should support more than one named entry', async () => {
     const assets = await runWebpack({
       entry: {
-        firstNamed: './input/first.js',
-        secondNamed: './input/second.js',
-        thirdNamed: './input/third.js',
+        firstNamed: './fixtures/first.js',
+        secondNamed: './fixtures/second.js',
+        thirdNamed: './fixtures/third.js',
       },
     });
 
@@ -53,9 +53,9 @@ describe('entry as an object', () => {
   test('should support more than one named entry while naming the output', async () => {
     const assets = await runWebpack({
       entry: {
-        firstNamed: './input/first.js',
-        secondNamed: './input/second.js',
-        thirdNamed: './input/third.js',
+        firstNamed: './fixtures/first.js',
+        secondNamed: './fixtures/second.js',
+        thirdNamed: './fixtures/third.js',
       },
       output: {
         filename: 'index.js',

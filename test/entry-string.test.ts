@@ -4,7 +4,7 @@ describe('entry as a string', () => {
 
   test('should be supported', async () => {
     const assets = await runWebpack({
-      entry: './input/first.js',
+      entry: './fixtures/first.js',
     });
 
     expect(assets).toStrictEqual([
@@ -15,7 +15,7 @@ describe('entry as a string', () => {
 
   test('should support naming the output', async () => {
     const assets = await runWebpack({
-      entry: './input/first.js',
+      entry: './fixtures/first.js',
       output: {
         filename: 'named.js',
       },
