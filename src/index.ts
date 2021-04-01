@@ -281,32 +281,25 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       return;
     }
 
-    this.setupHooksLogging('compiler', compiler.hooks as unknown as Record<string, Hook>);
+    setupHooksLogging(this.name, 'compiler', compiler.hooks as unknown as Record<string, Hook>);
 
     compiler.hooks.normalModuleFactory.tap(this.name, normalModuleFactory => {
-      this.setupHooksLogging('normalModuleFactory', normalModuleFactory.hooks as unknown as Record<string, Hook>);
+      setupHooksLogging(this.name, 'normalModuleFactory', normalModuleFactory.hooks as unknown as Record<string, Hook>);
     });
 
     compiler.hooks.compilation.tap(this.name, compilation => {
-      this.setupHooksLogging('compilation', compilation.hooks as unknown as Record<string, Hook>);
+      setupHooksLogging(this.name, 'compilation', compilation.hooks as unknown as Record<string, Hook>);
     });
-  }
 
-  setupHooksLogging(type: string, hooks: Record<string, Hook>): void {
-    const pluginName = this.name;
-    const { debugLifecycle, silent } = this.options;
-
-    if (!debugLifecycle || silent) {
-      return;
-    }
-
-    for (const [name, hook] of Object.entries(hooks)) {
-      try {
-        hook.tap(pluginName, function () {
-          console.debug(`[${pluginName}]: ${type} hook: ${name} (${arguments.length} arguments)`);
-        });
-      } catch (_) {
-        // ignore when unable to tap
+    function setupHooksLogging(pluginName: string, type: string, hooks: Record<string, Hook>): void {
+      for (const [name, hook] of Object.entries(hooks)) {
+        try {
+          hook.tap(pluginName, function () {
+            console.debug(`[${pluginName}]: ${type} hook: ${name} (${arguments.length} arguments)`);
+          });
+        } catch (_) {
+          // ignore when unable to tap
+        }
       }
     }
   }
