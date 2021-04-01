@@ -193,10 +193,6 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
   }
 
   preprocessOutput({ output }: WebpackOptionsNormalized): PreprocessedOutput {
-    if (typeof output.filename !== 'string') {
-      throw new Error('');
-    }
-
     let filename: string = output?.filename ?? '[name].js';
 
     const { directory, extension, name } = prepare(filename);
@@ -216,10 +212,6 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
   preprocessEntry({ context, entry }: WebpackOptionsNormalized): PreprocessedEntry[] {
     let entries: [string | undefined, string | string[]][];
-
-    if (entry === undefined || entry === null) {
-      throw new Error('');
-    }
 
     if (typeof entry === 'function') {
       throw new Error('');
