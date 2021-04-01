@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.0.2...v1.1.0) (2021-04-01)
+
+
+### Bug Fixes
+
+* add throw description for entry as function ([446219e](https://github.com/herberttn/bytenode-webpack-plugin/commit/446219ec3744d1a7465cc2736025a5ca09ba6b46))
+* debug logs should always use console.debug ([93979e2](https://github.com/herberttn/bytenode-webpack-plugin/commit/93979e29e8bfe92beb91ccbc10c849466783e4c0))
+* remove moot config checks ([e408ccb](https://github.com/herberttn/bytenode-webpack-plugin/commit/e408ccba0149193554537a0b3a384679a4333577))
+
 ## [1.0.2](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.0.1...v1.0.2) (2021-03-31)
 
 ## [1.0.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.0.0...v1.0.1) (2021-03-31)
