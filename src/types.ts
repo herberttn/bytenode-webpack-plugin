@@ -11,7 +11,6 @@ interface Options {
 interface Prepared {
   basename: string;
   extension: string;
-  filename: string;
   location: string;
   name: string;
   suffix: string;
