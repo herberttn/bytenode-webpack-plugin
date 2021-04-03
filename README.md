@@ -32,7 +32,7 @@ npm install --save @herberttn/bytenode-webpack-plugin
   - :heavy_check_mark:   `entry` as a `string` (e.g., `'src/index.js'`)
   - :heavy_check_mark:   `entry` as an `array` (e.g., `['src/index.js']`)
   - :heavy_check_mark:   `entry` as an `object` (e.g., `{ main: 'src/index.js' }`)
-  - :heavy_exclamation_mark:   `entry` middlewares (e.g., `['src/index.js', 'webpack-hot-middleware/client']`)
+  - :heavy_check_mark:   `entry` middlewares (e.g., `['src/index.js', 'webpack-hot-middleware/client']`)
   - :heavy_check_mark:   Dynamic `output.filename` (e.g., `'[name].js'`)
   - :heavy_check_mark:   Named `output.filename` (e.g., `'index.js'`)
 

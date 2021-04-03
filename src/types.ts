@@ -10,15 +10,19 @@ interface Options {
 
 interface Prepared {
   extension: string;
-  location: string;
+  locations: PreparedLocation[];
   name: string;
+}
+
+interface PreparedLocation {
+  dependency: boolean;
+  location: string;
 }
 
 interface PreprocessedEntry {
   entry: Prepared;
   compiled: Prepared;
   loader: Prepared;
-  middlewares: string[];
 }
 
 interface PreprocessedOutput {

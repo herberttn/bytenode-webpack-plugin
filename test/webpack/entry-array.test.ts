@@ -33,12 +33,8 @@ describe('entry as an array of strings', () => {
     });
 
     expect(assets).toStrictEqual([
-      'first.compiled.jsc',
-      'first.js',
-      'second.compiled.jsc',
-      'second.js',
-      'third.compiled.jsc',
-      'third.js',
+      'main.compiled.jsc',
+      'main.js',
     ]);
   });
 
@@ -51,10 +47,8 @@ describe('entry as an array of strings', () => {
     });
 
     expect(assets).toStrictEqual([
-      'first.compiled.jsc',
+      'main.compiled.jsc',
       'named.js',
-      'second.compiled.jsc',
-      'third.compiled.jsc',
     ]);
   });
 

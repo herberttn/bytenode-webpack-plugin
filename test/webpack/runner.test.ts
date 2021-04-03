@@ -7,7 +7,7 @@ describe('runner', () => {
       entry: './fixtures/invalid.js',
     });
 
-    await expect(runner).rejects.toContain('Entry module not found');
+    await expect(runner).rejects.toContain('not found');
   });
 
   test('should throw on an invalid output path', async () => {

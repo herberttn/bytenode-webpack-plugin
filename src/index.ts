@@ -130,17 +130,10 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
     const externals: string[] = [];
     const virtualModules: [string, string][] = [];
 
-    for (const { entry, compiled, loader, middlewares } of this.preprocessEntry(options)) {
+    for (const { entry, compiled, loader } of this.preprocessEntry(options)) {
       const entryName = output.name ?? entry.name;
 
-      const addMiddlewares = (location: string): string | string[] => {
-        if (Array.isArray(middlewares) && middlewares.length > 0) {
-          return [location, ...middlewares];
-        }
-        return location;
-      };
-
-      entries.push([entryName, addMiddlewares(loader.location)]);
+      entries.push([entryName, loader.locations.map(e => e.location)]);
       entryLoaders.push(entryName);
 
       const { name } = compiled;
@@ -158,9 +151,14 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
         relativeImportPath = path.resolve(options.output.path, 'renderer', relativeImportPath);
       }
 
-      entries.push([name, addMiddlewares(entry.location)]);
+      entries.push([name, entry.locations.map(e => e.location)]);
       externals.push(relativeImportPath);
-      virtualModules.push([loader.location, createLoaderCode(relativeImportPath)]);
+
+      for (const e of loader.locations) {
+        if (!e.dependency) {
+          virtualModules.push([e.location, createLoaderCode(relativeImportPath)]);
+        }
+      }
     }
 
     return {
@@ -192,10 +190,10 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
     return location.substr(0, location.length - path.extname(location).length);
   }
 
-  preprocessOutput({ output }: WebpackOptionsNormalized): PreprocessedOutput {
+  preprocessOutput({ context, output }: WebpackOptionsNormalized): PreprocessedOutput {
     let filename: string = output?.filename ?? '[name].js';
 
-    const { extension, name } = prepare(filename);
+    const { extension, name } = prepare(context, filename);
     const dynamic = /.*[[\]]+.*/.test(filename);
 
     filename = dynamic ? filename : '[name]' + extension;
@@ -216,34 +214,19 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       throw new Error('Entry as a function is not supported as of yet.');
     }
 
-    if (typeof entry === 'string') {
+    if (typeof entry === 'string' || Array.isArray(entry)) {
       entries = [[undefined, entry]];
-    } else if (Array.isArray(entry)) {
-      entries = entry.map(entry => [undefined, entry]);
     } else {
       entries = Object.entries(entry);
     }
 
     return entries.map(([name, location]) => {
-      const middlewares: string[] = [];
-
-      if (Array.isArray(location)) {
-        const [entry, ...rest] = location;
-
-        location = entry;
-        middlewares.push(...rest);
-      }
-
-      if (context && !path.isAbsolute(location)) {
-        location = path.resolve(context, location);
-      }
-
-      const entry = prepare(location, name);
-      const compiled = prepare(location, name, '.compiled');
-      const loader = prepare(location, name, '.loader');
+      const entry = prepare(context, location, name);
+      const compiled = prepare(context, location, name, '.compiled');
+      const loader = prepare(context, location, name, '.loader');
 
       return {
-        compiled, entry, loader, middlewares,
+        compiled, entry, loader,
       };
     });
   }
@@ -311,18 +294,57 @@ function createLoaderCode(relativePath: string): string {
   `;
 }
 
-function prepare(location: string, name?: string, suffix = ''): Prepared {
-  const directory = path.dirname(location);
-  const extension = path.extname(location);
-  const basename = path.basename(location, extension) + suffix;
-  const filename = basename + extension;
+function prepare(context: string | undefined, location: string | string[], name?: string, suffix = ''): Prepared {
+  const locationArray = Array.isArray(location) ? location : [location];
 
-  name = name ? name + suffix : basename;
-  location = path.join(directory, filename);
+  const locations = locationArray.map(location => {
+    const dependency = isDependency(location);
+
+    if (dependency) {
+      return {
+        dependency,
+        location,
+      };
+    }
+
+    if (context && !path.isAbsolute(location)) {
+      location = path.resolve(context, location);
+    }
+
+    const directory = path.dirname(location);
+    const extension = path.extname(location);
+    const basename = path.basename(location, extension) + suffix;
+    const filename = basename + extension;
+
+    location = path.join(directory, filename);
+
+    return {
+      basename,
+      dependency,
+      location,
+    };
+  });
+
+  let basename = 'main' + suffix;
+
+  if (locations.length === 1) {
+    const [single] = locations;
+    basename = single.basename ?? basename;
+  }
+
+  name = name ? name  + suffix : basename;
 
   return {
-    extension, location, name,
+    extension: '.js', locations, name,
   };
+
+  function isDependency(module: string): boolean {
+    try {
+      return typeof require.resolve(module) === 'string';
+    } catch (_) {
+      return false;
+    }
+  }
 }
 
 export {
