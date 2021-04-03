@@ -1,3 +1,11 @@
+# [1.2.0-rc.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.1.0...v1.2.0-rc.1) (2021-04-03)
+
+
+### Features
+
+* better entry middlewares support ([25218e5](https://github.com/herberttn/bytenode-webpack-plugin/commit/25218e5402013d54402f934f0b6ee231b6e508ae))
+* depend on webpack as peer only ([2724ee2](https://github.com/herberttn/bytenode-webpack-plugin/commit/2724ee23b46848141e49d8aacbbb7f61394473f1))
+
 # [1.1.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.0.2...v1.1.0) (2021-04-01)
 
 
