@@ -9,7 +9,6 @@ interface Options {
 }
 
 interface Prepared {
-  basename: string;
   extension: string;
   location: string;
   name: string;

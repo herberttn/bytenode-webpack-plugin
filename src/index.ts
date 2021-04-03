@@ -321,7 +321,7 @@ function prepare(location: string, name?: string, suffix = ''): Prepared {
   location = path.join(directory, filename);
 
   return {
-    basename, extension, location, name, suffix,
+    extension, location, name, suffix,
   };
 }
 
