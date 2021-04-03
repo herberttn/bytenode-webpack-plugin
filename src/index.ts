@@ -195,13 +195,12 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
   preprocessOutput({ output }: WebpackOptionsNormalized): PreprocessedOutput {
     let filename: string = output?.filename ?? '[name].js';
 
-    const { directory, extension, name } = prepare(filename);
+    const { extension, name } = prepare(filename);
     const dynamic = /.*[[\]]+.*/.test(filename);
 
     filename = dynamic ? filename : '[name]' + extension;
 
     return {
-      directory,
       dynamic,
       extension,
       filename,
@@ -322,7 +321,7 @@ function prepare(location: string, name?: string, suffix = ''): Prepared {
   location = path.join(directory, filename);
 
   return {
-    basename, directory, extension, filename, location, name, suffix,
+    basename, extension, filename, location, name, suffix,
   };
 }
 

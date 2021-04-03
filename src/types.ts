@@ -10,7 +10,6 @@ interface Options {
 
 interface Prepared {
   basename: string;
-  directory: string;
   extension: string;
   filename: string;
   location: string;
@@ -26,7 +25,6 @@ interface PreprocessedEntry {
 }
 
 interface PreprocessedOutput {
-  directory: string;
   dynamic: boolean;
   extension: string;
   filename: string;
