@@ -12,7 +12,6 @@ interface Prepared {
   extension: string;
   location: string;
   name: string;
-  suffix: string;
 }
 
 interface PreprocessedEntry {
