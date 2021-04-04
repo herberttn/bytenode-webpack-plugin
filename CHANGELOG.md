@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.0...v1.2.1) (2021-04-04)
+
+
+### Bug Fixes
+
+* dependency detection should ignore absolute and relative paths ([2bd5d7f](https://github.com/herberttn/bytenode-webpack-plugin/commit/2bd5d7fa6e7f7c4e8e7469c29f2a564fcba094d3))
+
 # [1.2.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.1.0...v1.2.0) (2021-04-03)
 
 
