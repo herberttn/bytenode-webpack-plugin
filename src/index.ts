@@ -339,6 +339,10 @@ function prepare(context: string | undefined, location: string | string[], name?
   };
 
   function isDependency(module: string): boolean {
+    if (path.isAbsolute(module) || /^[.]+\/.*/.test(module)) {
+      return false;
+    }
+
     try {
       return typeof require.resolve(module) === 'string';
     } catch (_) {
