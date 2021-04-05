@@ -6,13 +6,13 @@
 [![npm][badge-npm]][badge-npm-link]
 [![license][badge-license]][badge-license-link]
 
-[badge-coveralls]: https://coveralls.io/repos/github/herberttn/bytenode-webpack-plugin/badge.svg
+[badge-coveralls]: https://img.shields.io/coveralls/github/herberttn/bytenode-webpack-plugin?logo=coveralls&style=flat-square
 [badge-coveralls-link]: https://coveralls.io/github/herberttn/bytenode-webpack-plugin
-[badge-license]: https://img.shields.io/github/license/herberttn/bytenode-webpack-plugin
+[badge-license]: https://img.shields.io/github/license/herberttn/bytenode-webpack-plugin?style=flat-square
 [badge-license-link]: LICENSE
-[badge-npm]: https://img.shields.io/npm/v/@herberttn/bytenode-webpack-plugin
+[badge-npm]: https://img.shields.io/npm/v/@herberttn/bytenode-webpack-plugin?logo=npm&style=flat-square
 [badge-npm-link]: https://www.npmjs.com/package/@herberttn/bytenode-webpack-plugin
-[badge-workflow-ci]: https://github.com/herberttn/bytenode-webpack-plugin/actions/workflows/ci.yml/badge.svg?branch=main&event=push
+[badge-workflow-ci]: https://img.shields.io/github/workflow/status/herberttn/bytenode-webpack-plugin/ci?label=ci&logo=github&style=flat-square
 [badge-workflow-ci-link]: https://github.com/herberttn/bytenode-webpack-plugin/actions/workflows/ci.yml
 
 Compile JavaScript into bytecode using [`bytenode`][link-to-bytenode].  
