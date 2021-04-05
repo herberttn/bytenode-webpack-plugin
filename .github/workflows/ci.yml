@@ -34,5 +34,7 @@ jobs:
       - run: npm ci
       - run: npm run ${{ matrix.task }}
 
-      - uses: codecov/codecov-action@v1
-        if: ${{ matrix.task == 'test' }}
+      - if: ${{ matrix.task == 'test' }}
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ github.token }}
