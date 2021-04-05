@@ -33,3 +33,6 @@ jobs:
             npm-${{ runner.os }}-
       - run: npm ci
       - run: npm run ${{ matrix.task }}
+
+      - uses: codecov/codecov-action@v1
+        if: ${{ matrix.task == 'test' }}
