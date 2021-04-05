@@ -2,12 +2,12 @@
 ---
 
 [![ci][badge-workflow-ci]][badge-workflow-ci-link]
-[![codecov][badge-codecov]][badge-codecov-link]
+[![coveralls][badge-coveralls]][badge-coveralls-link]
 [![npm][badge-npm]][badge-npm-link]
 [![license][badge-license]][badge-license-link]
 
-[badge-codecov]: https://codecov.io/gh/herberttn/bytenode-webpack-plugin/branch/main/graph/badge.svg?token=JOJXZKESF5
-[badge-codecov-link]: https://codecov.io/gh/herberttn/bytenode-webpack-plugin
+[badge-coveralls]: https://coveralls.io/repos/github/herberttn/bytenode-webpack-plugin/badge.svg
+[badge-coveralls-link]: https://coveralls.io/github/herberttn/bytenode-webpack-plugin
 [badge-license]: https://img.shields.io/github/license/herberttn/bytenode-webpack-plugin
 [badge-license-link]: LICENSE
 [badge-npm]: https://img.shields.io/npm/v/@herberttn/bytenode-webpack-plugin
