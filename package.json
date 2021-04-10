@@ -23,7 +23,7 @@
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
-    "bytenode": "^1.2.1",
+    "bytenode": "^1.2.2",
     "webpack-virtual-modules": "^0.4.2"
   },
   "peerDependencies": {
