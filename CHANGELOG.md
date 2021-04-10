@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.1...v1.2.2) (2021-04-10)
+
+
+### Bug Fixes
+
+* bump bytenode to fix bytenode/bytenode[#122](https://github.com/herberttn/bytenode-webpack-plugin/issues/122) ([e7de4eb](https://github.com/herberttn/bytenode-webpack-plugin/commit/e7de4eb2c3c84ae05992339cd98e0e90062a1352))
+
 ## [1.2.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.0...v1.2.1) (2021-04-04)
 
 
