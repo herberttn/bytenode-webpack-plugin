@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "bytenode": "^1.2.2",
+    "slash": "3.0.0",
     "webpack-virtual-modules": "^0.4.2"
   },
   "peerDependencies": {
@@ -43,7 +44,6 @@
     "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
     "semantic-release": "17.4.2",
-    "slash": "3.0.0",
     "ts-jest": "26.5.4",
     "ts-node": "9.1.1",
     "typescript": "4.2.3",
