@@ -9,6 +9,7 @@ import type { WebpackPluginInstance } from 'webpack';
 import type { Source } from 'webpack-sources';
 import WebpackVirtualModules from 'webpack-virtual-modules';
 
+import { createLoaderCode } from './loader';
 import type { Compiler, EntryPoint, WebpackOptionsNormalized } from './normalized';
 import type { Options, Prepared, PreprocessedEntry, PreprocessedOutput, ProcessedOptions } from './types';
 
@@ -285,13 +286,6 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       }
     }
   }
-}
-
-function createLoaderCode(relativePath: string): string {
-  return `
-    require('bytenode');
-    require('${relativePath}');
-  `;
 }
 
 function prepare(context: string | undefined, location: string | string[], name?: string, suffix = ''): Prepared {
