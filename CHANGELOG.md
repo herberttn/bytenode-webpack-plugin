@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.2...v1.2.3) (2021-04-23)
+
+
+### Bug Fixes
+
+* normalize loader import path to compiled file ([1bb918f](https://github.com/herberttn/bytenode-webpack-plugin/commit/1bb918f7320ba5a1a172c050e52d7e33066e6592))
+
 ## [1.2.2](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.1...v1.2.2) (2021-04-10)
 
 
