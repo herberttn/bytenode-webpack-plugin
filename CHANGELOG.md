@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.3...v1.2.4) (2021-04-23)
+
+
+### Bug Fixes
+
+* misplaced dependency ([3e564b3](https://github.com/herberttn/bytenode-webpack-plugin/commit/3e564b34a72826871d9f47d71aba7235108c3b13))
+
 ## [1.2.3](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.2...v1.2.3) (2021-04-23)
 
 
