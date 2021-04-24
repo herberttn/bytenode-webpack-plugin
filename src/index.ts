@@ -10,6 +10,7 @@ import type { Source } from 'webpack-sources';
 import WebpackVirtualModules from 'webpack-virtual-modules';
 
 import { createLoaderCode } from './loader';
+import { toRelativeImportPath } from './paths';
 import type { Options, Prepared, PreprocessedEntry, PreprocessedOutput, ProcessedOptions } from './types';
 import type { Compiler, EntryPoint, WebpackOptionsNormalized } from './types-normalized';
 
@@ -142,7 +143,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       const from = output.of(entryName);
       const to = output.of(name);
 
-      let relativeImportPath = this.toRelativeImportPath(options.output.path, from, to);
+      let relativeImportPath = toRelativeImportPath(options.output.path, from, to);
 
       // Use absolute path to load the compiled file in dev mode due to how electron-forge handles
       // the renderer process code loading (by using a server and not directly from the file system).
@@ -169,26 +170,6 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       output,
       virtualModules: Object.fromEntries(virtualModules),
     };
-  }
-
-  toRelativeImportPath(directory: string, from: string, to: string): string {
-    from = this.removeExtension(from);
-    to = this.removeExtension(to);
-
-    const fromLocation = path.join(directory, from);
-    const toLocation = path.join(directory, to);
-
-    const relativePath = path.relative(path.dirname(fromLocation), toLocation);
-
-    if (relativePath === to) {
-      return `./${relativePath}`;
-    }
-
-    return relativePath;
-  }
-
-  removeExtension(location: string): string {
-    return location.substr(0, location.length - path.extname(location).length);
   }
 
   preprocessOutput({ context, output }: WebpackOptionsNormalized): PreprocessedOutput {
