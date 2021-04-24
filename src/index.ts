@@ -10,8 +10,8 @@ import type { Source } from 'webpack-sources';
 import WebpackVirtualModules from 'webpack-virtual-modules';
 
 import { createLoaderCode } from './loader';
-import type { Compiler, EntryPoint, WebpackOptionsNormalized } from './normalized';
 import type { Options, Prepared, PreprocessedEntry, PreprocessedOutput, ProcessedOptions } from './types';
+import type { Compiler, EntryPoint, WebpackOptionsNormalized } from './types-normalized';
 
 v8.setFlagsFromString('--no-lazy');
 
