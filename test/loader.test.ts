@@ -1,6 +1,8 @@
+import { mockPlatform, UNIX_PLATFORMS } from './mocks/platform';
+
 describe('createLoaderCode', () => {
 
-  for (const platform of ['darwin', 'linux'] as NodeJS.Platform[]) {
+  for (const platform of UNIX_PLATFORMS) {
     describe(`${platform}`, () => {
 
       describe('absolute', () => {
@@ -59,20 +61,6 @@ describe('createLoaderCode', () => {
   });
 
 });
-
-async function mockPlatform(platform: NodeJS.Platform): Promise<void> {
-  jest.resetModules();
-  jest.doMock('os', () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const os = jest.requireActual('os');
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return { ...os, platform: () => platform };
-  });
-
-  const os = await import('os');
-  expect(os.platform()).toBe(platform);
-}
 
 async function testLoaderCode(from: string, to: string): Promise<void> {
   const { createLoaderCode } = await import('../src/loader');
