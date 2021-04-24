@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.4...v1.2.5) (2021-04-24)
+
+
+### Bug Fixes
+
+* webpack externals need to receive posix style paths ([ba012c5](https://github.com/herberttn/bytenode-webpack-plugin/commit/ba012c5e9cffb509640be73d070f1dcdbf114f90))
+
 ## [1.2.4](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.3...v1.2.4) (2021-04-23)
 
 
