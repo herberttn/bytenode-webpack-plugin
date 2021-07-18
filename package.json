@@ -28,7 +28,7 @@
     "webpack-virtual-modules": "^0.4.3"
   },
   "peerDependencies": {
-    "webpack": "4.x"
+    "webpack": ">= 4.0 < 6"
   },
   "devDependencies": {
     "@jest/types": "26.6.2",
