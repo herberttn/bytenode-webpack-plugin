@@ -269,36 +269,49 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
   }
 }
 
-function prepare(context: string | undefined, location: string | string[], name?: string, suffix = ''): Prepared {
+function prepare(context: string | undefined, location: string | string[] | { import: string } | { import: string }[], name?: string, suffix = ''): Prepared {
   const locationArray = Array.isArray(location) ? location : [location];
 
-  const locations = locationArray.map(location => {
-    const dependency = isDependency(location);
+  const locations = locationArray
+    .map(location => {
+      if (typeof location === 'object' && location.import) {
+        return location.import
+      } else if (typeof location === 'string') {
+        return location
+      } else if (Array.isArray(location)) {
+        return location
+      } else {
+        throw new Error('Could not read entry location')
+      }
+    })
+    .flat()
+    .map(location => {
+      const dependency = isDependency(location);
 
-    if (dependency) {
+      if (dependency) {
+        return {
+          dependency,
+          location,
+        };
+      }
+
+      if (context && !path.isAbsolute(location)) {
+        location = path.resolve(context, location);
+      }
+
+      const directory = path.dirname(location);
+      const extension = path.extname(location);
+      const basename = path.basename(location, extension) + suffix;
+      const filename = basename + extension;
+
+      location = path.join(directory, filename);
+
       return {
+        basename,
         dependency,
         location,
       };
-    }
-
-    if (context && !path.isAbsolute(location)) {
-      location = path.resolve(context, location);
-    }
-
-    const directory = path.dirname(location);
-    const extension = path.extname(location);
-    const basename = path.basename(location, extension) + suffix;
-    const filename = basename + extension;
-
-    location = path.join(directory, filename);
-
-    return {
-      basename,
-      dependency,
-      location,
-    };
-  });
+    });
 
   let basename = 'main' + suffix;
 
