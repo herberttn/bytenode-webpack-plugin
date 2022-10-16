@@ -1,21 +1,25 @@
 import { resolve } from 'path';
 
+import type { Config } from 'jest';
+
 const ignorePatterns = [
   '<rootDir>/node_modules/',
   '<rootDir>/test/webpack/fixtures/',
   '<rootDir>/test/webpack/output/',
 ];
 
-module.exports = {
-  collectCoverage: true,
-  coveragePathIgnorePatterns: ignorePatterns,
-  globals: {
-    'ts-jest': {
-      tsconfig: resolve(__dirname, './tsconfig.test.json'),
+export default function(): Config {
+  return {
+    collectCoverage: true,
+    coveragePathIgnorePatterns: ignorePatterns,
+    preset: 'ts-jest/presets/default',
+    testEnvironment: 'node',
+    transform: {
+      '^.+\\.tsx?$': ['ts-jest', {
+        tsconfig: resolve(__dirname, './tsconfig.test.json'),
+      }],
     },
-  },
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  verbose: true,
-  watchPathIgnorePatterns: ignorePatterns,
-};
+    verbose: true,
+    watchPathIgnorePatterns: ignorePatterns,
+  };
+}
