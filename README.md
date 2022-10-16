@@ -20,18 +20,21 @@ Inspired by [`bytenode-webpack-plugin`][link-to-bytenode-webpack-plugin].
 
 [link-to-bytenode-webpack-plugin]: https://www.npmjs.com/package/bytenode-webpack-plugin
 [link-to-bytenode]: https://www.npmjs.com/package/bytenode
+[link-to-nodejs]: https://nodejs.org
 
 ### Install
 ```shell
 npm install --save @herberttn/bytenode-webpack-plugin
 ```
 
-### Supports
+### Supported versions
+- [`node`][link-to-nodejs] `v14+` (this plugin is published in `ES2020` `CommonJS` syntax at the moment)
+- [`webpack`][link-to-webpack] `v4.x`
+
+### Supported features
 - [`electron-forge`][link-to-electron-forge]
   - :heavy_check_mark:  Default configuration
 - [`webpack`][link-to-webpack]
-  - :heavy_check_mark:  v4
-  - :grey_question:  v5
   - :heavy_check_mark:   `entry` as a `string` (e.g., `'src/index.js'`)
   - :heavy_check_mark:   `entry` as an `array` (e.g., `['src/index.js']`)
   - :heavy_check_mark:   `entry` as an `object` (e.g., `{ main: 'src/index.js' }`)
