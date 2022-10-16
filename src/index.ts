@@ -97,10 +97,10 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
           continue;
         }
 
-        let source = asset.source();
+        let source = asset.buffer().toString();
 
         if (this.options.compileAsModule) {
-          source = Module.wrap(source as string);
+          source = Module.wrap(source);
         }
 
         const compiledAssetName = name.replace(outputExtensionRegex, '.jsc');
