@@ -1,3 +1,27 @@
+# [2.0.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.5...v2.0.0) (2022-10-20)
+
+
+### Features
+
+* **deps:** bump bytenode ([c1826d7](https://github.com/herberttn/bytenode-webpack-plugin/commit/c1826d7c129b18280881b3ed8e16d6f257121a0e))
+* **deps:** bump webpack-hot-middleware ([3766ba0](https://github.com/herberttn/bytenode-webpack-plugin/commit/3766ba0fcf4caefee1c3180ac64d8df36c310166))
+* **deps:** bump webpack-merge ([bcc6366](https://github.com/herberttn/bytenode-webpack-plugin/commit/bcc636682164b602129cffdb52accc1e1cfbf38b))
+* **deps:** bump webpack-virtual-modules ([e47de32](https://github.com/herberttn/bytenode-webpack-plugin/commit/e47de32664150f9481a60dcf1b7601d3b89ee5e8))
+* webpack v5 ([2fc5d72](https://github.com/herberttn/bytenode-webpack-plugin/commit/2fc5d72f48fa9d31974a5fa7a8d21ae79e745ed7))
+
+
+### BREAKING CHANGES
+
+* This version adds support to `webpack` `v5` and
+drops `webpack` `v4`. Use a previous version if using `webpack` `v4`.
+
+DEPRECATED: This version drops the options `debugLogs` and `silent`,
+as it now uses webpack's built-in logging system. Logging should be
+enabled through webpack's own configuration. The option
+`debugLifecycle` is still present, but it also works in conjunction
+with webpack's logging system, so both need to be enabled for logs to
+ be seen.
+
 ## [1.2.5](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.4...v1.2.5) (2021-04-24)
 
 
