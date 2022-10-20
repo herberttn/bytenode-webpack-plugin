@@ -1,10 +1,10 @@
 import { runWebpack } from './runner';
 
-describe('entry as a string', () => {
+describe('with-dependency', () => {
 
-  test('should be supported', async () => {
+  test('should just work', async () => {
     const assets = await runWebpack({
-      entry: './fixtures/first.js',
+      entry: './fixtures/dependency.js',
     });
 
     expect(assets?.sort()).toStrictEqual([

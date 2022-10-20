@@ -7,7 +7,7 @@ describe('entry as a function', () => {
       entry: () => './fixtures/first.js',
     });
 
-    await expect(assets).rejects.toThrow('Entry as a function is not supported as of yet.');
+    await expect(assets).rejects.toThrow('webpack.options.entry cannot be a function');
   });
 
 });

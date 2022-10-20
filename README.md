@@ -29,18 +29,19 @@ npm install --save @herberttn/bytenode-webpack-plugin
 
 ### Supported versions
 - [`node`][link-to-nodejs] `v14+` (this plugin is published in `ES2020` `CommonJS` syntax at the moment)
-- [`webpack`][link-to-webpack] `v4.x`
+- [`webpack`][link-to-webpack] `v5.x`
 
 ### Supported features
 - [`electron-forge`][link-to-electron-forge]
   - :heavy_check_mark:  Default configuration
 - [`webpack`][link-to-webpack]
-  - :heavy_check_mark:   `entry` as a `string` (e.g., `'src/index.js'`)
-  - :heavy_check_mark:   `entry` as an `array` (e.g., `['src/index.js']`)
-  - :heavy_check_mark:   `entry` as an `object` (e.g., `{ main: 'src/index.js' }`)
-  - :heavy_check_mark:   `entry` middlewares (e.g., `['src/index.js', 'webpack-hot-middleware/client']`)
-  - :heavy_check_mark:   Dynamic `output.filename` (e.g., `'[name].js'`)
-  - :heavy_check_mark:   Named `output.filename` (e.g., `'index.js'`)
+  - :heavy_check_mark:   `entry` as a `string` (e.g., `entry: 'src/index.js'`)
+  - :heavy_check_mark:   `entry` as an `array` (e.g., `entry: ['src/index.js']`)
+  - :heavy_check_mark:   `entry` as an `object` (e.g., `entry: { main: 'src/index.js' }`)
+  - :heavy_check_mark:   `entry` middlewares (e.g., `entry: ['src/index.js', 'webpack-hot-middleware/client']`)
+  - :x:   `entry.*.filename` (e.g., `entry: { main: { filename: 'index.js' } }`)
+  - :heavy_check_mark:   Dynamic `output.filename` (e.g., `output: { filename: '[name].js' }`)
+  - :x:   Static `output.filename` (e.g., `output: { filename: 'index.js' }`)
 
 [link-to-electron-forge]: https://www.npmjs.com/package/electron-forge
 [link-to-webpack]: https://www.npmjs.com/package/webpack
@@ -71,10 +72,8 @@ interface Options {
   compileAsModule: boolean;    // wraps the code in a node module
   compileForElectron: boolean; // compiles for electron instead of plain node
   debugLifecycle: boolean;     // enables webpack hooks lifecycle logs
-  debugLogs: boolean;          // enables debug logs
   keepSource: boolean;         // emits the original source files along with the compiled ones
   preventSourceMaps: boolean;  // prevents source maps from being generated
-  silent: boolean;             // disables all logs, but not errors thrown (overrides debug flags)
 }
 ```
 
@@ -84,10 +83,8 @@ new BytenodeWebpackPlugin({
   compileAsModule: true,
   compileForElectron: false,
   debugLifecycle: false,
-  debugLogs: false,
   keepSource: false,
   preventSourceMaps: true,
-  silent: false,
 })
 ```
 

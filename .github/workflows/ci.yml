@@ -11,7 +11,7 @@ on:
       - '**.md'
 
 env:
-  node: 15
+  node: 18
 
 jobs:
 

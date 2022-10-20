@@ -19,7 +19,6 @@ export default function(): Config {
         tsconfig: resolve(__dirname, './tsconfig.test.json'),
       }],
     },
-    verbose: true,
     watchPathIgnorePatterns: ignorePatterns,
   };
 }
