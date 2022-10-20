@@ -2,11 +2,11 @@ name: ci
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
       - '**.md'
   push:
-    branches: [ main ]
+    branches: [main]
     paths-ignore:
       - '**.md'
 
@@ -21,20 +21,14 @@ jobs:
       matrix:
         task: [lint, build, test]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
+          cache: npm
           node-version: ${{ env.node }}
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            npm-${{ runner.os }}-
       - run: npm ci
       - run: npm run ${{ matrix.task }}
-
       - if: ${{ matrix.task == 'test' }}
-        uses: coverallsapp/github-action@v1.1.2
+        uses: coverallsapp/github-action@master
         with:
           github-token: ${{ github.token }}
