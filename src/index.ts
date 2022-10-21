@@ -93,7 +93,11 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
       const source = await replaceSource(asset, raw => {
         for (const file of files) {
-          raw = raw.replace(file, fromTargetToCompiledExtension(file));
+          const name = fromTargetToCompiledExtension(file)
+          const replace = `(.*)${file}(.*)`;
+          const rex = new RegExp(replace,"g");
+          const matches = rex.exec(raw)
+          raw = raw.replace(matches![0], `require('bytenode'); ${matches![1]}${name}${matches![2]}`)
         }
         return raw;
       });
