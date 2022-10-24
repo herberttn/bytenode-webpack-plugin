@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.1.0...v2.1.1) (2022-10-24)
+
+
+### Bug Fixes
+
+* strip-shebang should be a production dependency ([fd5a570](https://github.com/herberttn/bytenode-webpack-plugin/commit/fd5a5707006256cb4f1a6cef3fae0b1e518ab210))
+
 # [2.1.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.0.0...v2.1.0) (2022-10-24)
 
 
