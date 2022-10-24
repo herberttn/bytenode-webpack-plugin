@@ -1,20 +1,9 @@
-import { createLoaderCode, createLoaderRequest } from '../src/loaders';
+import { createLoaderCode } from '../src/loaders';
 import type { LoaderOptions } from '../src/loaders';
 
 import { mockPlatform, UNIX_PLATFORMS } from './mocks/platform';
 
 describe('loaders', () => {
-
-  describe('createLoaderRequest', () => {
-    const loaderLocation = require.resolve('../src/loaders');
-
-    test('with options and string imports', () => {
-      expect(createLoaderRequest({ imports: ['mock1', 'mock2'] }))
-        .toBe(`${loaderLocation}?{"imports":["mock1","mock2"]}!`);
-    });
-
-    testLoaderOptions(createLoaderRequest);
-  });
 
   for (const platform of UNIX_PLATFORMS) {
     describe(`${platform}`, () => {

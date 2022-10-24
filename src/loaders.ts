@@ -1,8 +1,7 @@
 import { platform } from 'os';
-import { resolve, win32 } from 'path';
+import { win32 } from 'path';
 
 import slash from 'slash';
-import type { LoaderContext } from 'webpack';
 
 interface LoaderOptions {
   imports: string[];
@@ -21,7 +20,7 @@ function checkLoaderOptions(options: LoaderOptions): void {
     throw new Error('loader options.imports cannot be empty');
   }
 
-  if (options.imports.some(i => typeof i !== 'string')) {
+  if (options.imports.some(file => typeof file !== 'string')) {
     throw new Error('loader options.imports can only have strings');
   }
 }
@@ -42,32 +41,6 @@ function createLoaderCode(options: LoaderOptions): string {
     .join('\n');
 }
 
-function createLoaderRequest(options: LoaderOptions): string {
-  checkLoaderOptions(options);
-
-  const loader = resolve(__filename);
-  const query = JSON.stringify(options);
-
-  return `${loader}?${query}!`;
-}
-
-function executeLoader(this: LoaderContext<LoaderOptions>): string {
-  return createLoaderCode(this.getOptions({
-    properties: {
-      imports: {
-        items: {
-          type: 'string',
-        },
-        type: 'array',
-      },
-    },
-    required: [
-      'imports',
-    ],
-    type: 'object',
-  }));
-}
-
 function normalizeRelativePath(relativePath: string): string {
   if (/win32/.test(platform()) && win32.isAbsolute(relativePath)) {
     relativePath = win32.normalize(relativePath);
@@ -79,10 +52,8 @@ function normalizeRelativePath(relativePath: string): string {
   return relativePath;
 }
 
-export default executeLoader;
 export {
   createLoaderCode,
-  createLoaderRequest,
   normalizeRelativePath,
 };
 

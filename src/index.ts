@@ -1,11 +1,12 @@
 import type { Hook } from 'tapable';
 import { Compilation, ExternalsPlugin } from 'webpack';
 import type { Compiler, WebpackPluginInstance } from 'webpack';
+import VirtualModulesPlugin from 'webpack-virtual-modules';
 
-import { createLoaderRequest } from './loaders';
+import { createLoaderCode } from './loaders';
 import { compileSource, replaceSource } from './sources';
-import type { Options, PreparedEntries, PreparedEntry, Source } from './types';
-import { fromTargetToCompiledExtension, isTargetExtension } from './utils';
+import type { Options, Prepared, PreparedEntries, PreparedEntry, Source } from './types';
+import { fromTargetToCompiledExtension, isTargetExtension, toLoaderFileName, toSiblingRelativeFileLocation } from './utils';
 
 class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
@@ -29,7 +30,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
     logger.debug('original webpack.options.entry', compiler.options.entry);
 
-    const { ignored, loaders, targets } = prepareEntries(compiler);
+    const { entries: { ignored, loaders, targets }, modules } = prepare(compiler);
 
     compiler.options.entry = Object.fromEntries([
       ...ignored.entries(),
@@ -47,6 +48,9 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
     logger.debug('adding electron as external');
     new ExternalsPlugin('commonjs', ['electron'])
+      .apply(compiler);
+
+    new VirtualModulesPlugin(Object.fromEntries(modules.entries()))
       .apply(compiler);
 
     // ensure hooks run last by tapping after the other plugins
@@ -137,15 +141,15 @@ function collectEntryFiles(compilation: Compilation, from: PreparedEntry): strin
   return files;
 }
 
-function prepareEntries(compiler: Compiler): PreparedEntries {
+function prepare(compiler: Compiler): Prepared {
   const { entry, output } = compiler.options;
 
   if (typeof entry === 'function') {
-    throw new Error('webpack.options.entry cannot be a function');
+    throw new Error('webpack.options.entry cannot be a function, use strings or objects');
   }
 
   if (typeof output.filename === 'string' && !/.*[[\]]+.*/.test(output.filename)) {
-    throw new Error('webpack.options.filename cannot be static');
+    throw new Error('webpack.options.output.filename cannot be static, use a dynamic one like [name].js');
   }
 
   const entries: PreparedEntries = {
@@ -154,25 +158,34 @@ function prepareEntries(compiler: Compiler): PreparedEntries {
     targets: new Map(),
   };
 
+  const modules = new Map();
+
   for (const [name, descriptor] of Object.entries(entry)) {
     if (descriptor.filename) {
-      throw new Error('webpack.options.entry.filename is not supported');
+      throw new Error('webpack.options.entry.filename is not supported, use webpack.options.output.filename');
     }
 
     const imports = descriptor.import as string[];
-    const targetName = name + '.compiled';
 
     // adds a new entry with a .compiled suffix, pointing to the original imports, which will be compiled
-    entries.targets.set(targetName, { ...descriptor, import: imports });
+    entries.targets.set(name + '.compiled', { ...descriptor, import: imports });
 
-    // changes the original entry to use a loader, which will generate code that loads the decompiler and the new compiled entries
-    entries.loaders.set(name, {
-      dependOn: [targetName],
-      import: [createLoaderRequest({ imports })],
-    });
+    // changes the original entry to use loader files, which will load the decompiler and the new compiled entries
+    entries.loaders.set(name, { import: imports.map(file => toLoaderFileName(file)) });
+
+    // generates virtual modules with the code of the loader files
+    for (const file of imports) {
+      const code = createLoaderCode({ imports: [toSiblingRelativeFileLocation(file)] });
+      const location = toLoaderFileName(file);
+
+      modules.set(location, code);
+    }
   }
 
-  return entries;
+  return {
+    entries,
+    modules,
+  };
 }
 
 function setupLifecycleLogging(compiler: Compiler, name: string, options: Options): void {

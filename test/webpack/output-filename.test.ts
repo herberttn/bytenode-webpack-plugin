@@ -10,7 +10,7 @@ describe('output filename', () => {
       },
     });
 
-    await expect(assets).rejects.toThrow('webpack.options.filename cannot be static');
+    await expect(assets).rejects.toThrow('webpack.options.output.filename cannot be static, use a dynamic one like [name].js');
   });
 
   test('should support dynamic filename', async () => {

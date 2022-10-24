@@ -5,6 +5,7 @@
     "rootDir": "src"
   },
   "exclude": [
+    "examples",
     "jest.config.ts",
     "lib",
     "test"

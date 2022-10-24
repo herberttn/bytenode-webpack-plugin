@@ -33,7 +33,7 @@ npm install --save @herberttn/bytenode-webpack-plugin
 
 ### Supported features
 - [`electron-forge`][link-to-electron-forge]
-  - :heavy_check_mark:  Default configuration
+  - :heavy_check_mark:  Default configuration with [caveats](#electron-forge-support)
 - [`webpack`][link-to-webpack]
   - :heavy_check_mark:   `entry` as a `string` (e.g., `entry: 'src/index.js'`)
   - :heavy_check_mark:   `entry` as an `array` (e.g., `entry: ['src/index.js']`)
@@ -87,6 +87,50 @@ new BytenodeWebpackPlugin({
   preventSourceMaps: true,
 })
 ```
+
+### Caveats
+
+#### `electron-forge` support
+##### main process
+You may need to change the default entry configuration for the main process. Probably something like this:
+
+```diff
+-  entry: './src/index.ts',
++  entry: {
++    index: './src/index.ts',
++  },
++  output: {
++    filename: '[name].js',
++  },
+```
+##### renderer process
+You will probably run into [missing node core modules](#missing-node-core-modules).
+
+#### Missing node core modules
+If you run into a webpack error similar to the one below, it's because `bytenode` requires some of node's code modules to properly do its job, and only you can decide the best way to provide them given your configuration.
+
+Two possible solutions:
+- Set webpack's target to `node`
+- Provide polyfills for the necessary modules
+>Other solutions may exist.
+
+Error example:
+```shell
+ERROR in ../../node_modules/bytenode/lib/index.js 3:11-24
+Module not found: Error: Can't resolve 'fs' in '../../node_modules/bytenode/lib'
+ @ ./src/renderer.loader.js 1:0-19
+
+BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
+This is no longer the case. Verify if you need this module and configure a polyfill for it.
+
+If you want to include a polyfill, you need to:
+	- add a fallback 'resolve.fallback: { "vm": require.resolve("vm-browserify") }'
+	- install 'vm-browserify'
+If you don't want to include a polyfill, you can use an empty module like this:
+	resolve.fallback: { "vm": false }
+ @ ./src/renderer.loader.js 1:0-19
+```
+
 
 ### Contributors
 

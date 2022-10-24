@@ -49,6 +49,26 @@ describe('utils', () => {
         expect(isTargetExtension('index.json')).toBe(false);
       });
 
+      test('toLoaderFileName', async () => {
+        await mockPlatform(platform);
+
+        const { toLoaderFileName } = await import('../src/utils');
+
+        expect(toLoaderFileName('index.js')).toBe('index.loader.js');
+        expect(toLoaderFileName('index.jsc')).toBe('index.loader.js');
+        expect(toLoaderFileName('index.json')).toBe('index.loader.js');
+      });
+
+      test('toSiblingRelativeFileLocation', async () => {
+        await mockPlatform(platform);
+
+        const { toSiblingRelativeFileLocation } = await import('../src/utils');
+
+        expect(toSiblingRelativeFileLocation('index.js')).toBe('./index.js');
+        expect(toSiblingRelativeFileLocation('./a/b/c/index.jsc')).toBe('./index.jsc');
+        expect(toSiblingRelativeFileLocation('/a/b/c/index.json')).toBe('./index.json');
+      });
+
     });
   }
 
