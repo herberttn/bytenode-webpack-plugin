@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.0.0...v2.1.0) (2022-10-24)
+
+
+### Features
+
+* electron-forge v6 support ([8131cf7](https://github.com/herberttn/bytenode-webpack-plugin/commit/8131cf7860032dbb564e1bf865f0cdaa0f0ec1f8))
+
 # [2.0.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v1.2.5...v2.0.0) (2022-10-20)
 
 
