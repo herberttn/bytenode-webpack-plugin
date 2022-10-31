@@ -1,10 +1,14 @@
+*.debug
 *.eslintcache
 *.log
 *.tsbuildinfo
 
 .idea/
 .vscode/
-coverage/
-lib/
-node_modules/
-test/webpack/output/
+
+**/.webpack/
+**/coverage/
+**/dist/
+**/lib/
+**/node_modules/
+**/out/

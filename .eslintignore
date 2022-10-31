@@ -1,5 +1,6 @@
 .eslintrc.js
 
+examples/
 lib/
 node_modules/
 test/output/

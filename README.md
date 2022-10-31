@@ -32,8 +32,9 @@ npm install --save @herberttn/bytenode-webpack-plugin
 - [`webpack`][link-to-webpack] `v5.x`
 
 ### Supported features
-- [`electron-forge`][link-to-electron-forge]
-  - :heavy_check_mark:  Default configuration with [caveats](#electron-forge-support)
+- [`electron-forge`][link-to-electron-forge] with [caveats](#electron-forge-support)
+  - :heavy_check_mark:  Default template `webpack`
+  - :heavy_check_mark:  Default template `typescript-webpack`
 - [`webpack`][link-to-webpack]
   - :heavy_check_mark:   `entry` as a `string` (e.g., `entry: 'src/index.js'`)
   - :heavy_check_mark:   `entry` as an `array` (e.g., `entry: ['src/index.js']`)
@@ -87,6 +88,9 @@ new BytenodeWebpackPlugin({
   preventSourceMaps: true,
 })
 ```
+
+### Examples
+Sample projects can be found in the [examples](./examples) directory.
 
 ### Caveats
 
