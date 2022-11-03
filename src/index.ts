@@ -43,6 +43,18 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
       compiler.options.devtool = false;
     }
 
+    if (this.options.compileForElectron) {
+      const target = compiler.options.target;
+
+      if (target) {
+        const targets = Array.isArray(target) ? target : [target];
+
+        if (!targets.some(target => target.startsWith('electron-'))) {
+          logger.warn(`Consider using an electron target instead of or in addition to [${targets.join(', ')}] when compiling for electron.`);
+        }
+      }
+    }
+
     logger.debug('modified webpack.options.devtool', compiler.options.devtool);
     logger.debug('modified webpack.options.entry', compiler.options.entry);
 

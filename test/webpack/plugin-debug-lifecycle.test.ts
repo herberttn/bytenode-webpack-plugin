@@ -1,8 +1,9 @@
 import { runWebpack } from './runner';
 import type { Configuration } from './runner';
 
-console.log = jest.fn();
 console.debug = jest.fn();
+console.log = jest.fn();
+console.warn = jest.fn();
 
 const webpackOptions: Configuration = {
   entry: './fixtures/first.js',
