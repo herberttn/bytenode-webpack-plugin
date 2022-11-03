@@ -1,10 +1,14 @@
 import type { ValuesType } from 'utility-types';
 import type { EntryNormalized, sources } from 'webpack';
 
+type FilesMatcher = string | RegExp;
+
 interface Options {
   compileAsModule: boolean;
   compileForElectron: boolean;
   debugLifecycle: boolean;
+  exclude?: FilesMatcher[];
+  include?: FilesMatcher[];
   keepSource: boolean;
   preventSourceMaps: boolean;
 }
@@ -28,6 +32,7 @@ type PreparedEntry = Map<string, PreparedEntryDescriptor>;
 type Source = sources.Source;
 
 export type {
+  FilesMatcher,
   Options,
   Prepared,
   PreparedEntries,
