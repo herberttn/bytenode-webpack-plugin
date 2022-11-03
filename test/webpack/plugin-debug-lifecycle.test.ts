@@ -17,7 +17,7 @@ const webpackOptions: Configuration = {
   },
 };
 
-describe('debugLifecycle', () => {
+describe('plugin option: debugLifecycle', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();

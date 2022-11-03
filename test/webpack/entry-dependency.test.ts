@@ -1,6 +1,6 @@
 import { runWebpack } from './runner';
 
-describe('with-dependency', () => {
+describe('entry dependency', () => {
 
   test('should just work', async () => {
     const assets = await runWebpack({
