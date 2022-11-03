@@ -18,9 +18,13 @@
 Compile JavaScript into bytecode using [`bytenode`][link-to-bytenode].  
 Inspired by [`bytenode-webpack-plugin`][link-to-bytenode-webpack-plugin].
 
-[link-to-bytenode-webpack-plugin]: https://www.npmjs.com/package/bytenode-webpack-plugin
 [link-to-bytenode]: https://www.npmjs.com/package/bytenode
+[link-to-bytenode-webpack-plugin]: https://www.npmjs.com/package/bytenode-webpack-plugin
+[link-to-electron-forge]: https://www.npmjs.com/package/electron-forge
+[link-to-electron-forge-typescript-webpack-template]: https://www.electronforge.io/templates/typescript-+-webpack-template
+[link-to-electron-forge-webpack-template]: https://www.electronforge.io/templates/webpack-template
 [link-to-nodejs]: https://nodejs.org
+[link-to-webpack]: https://www.npmjs.com/package/webpack
 
 ### Install
 ```shell
@@ -33,8 +37,8 @@ npm install --save @herberttn/bytenode-webpack-plugin
 
 ### Supported features
 - [`electron-forge`][link-to-electron-forge] with [caveats](#electron-forge-support)
-  - :heavy_check_mark:  Default template `typescript-webpack`
-  - :heavy_check_mark:  Default template `webpack`
+  - :heavy_check_mark:  Default template: [`typescript-webpack`][link-to-electron-forge-typescript-webpack-template]
+  - :heavy_check_mark:  Default template: [`webpack`][link-to-electron-forge-webpack-template]
 - [`webpack`][link-to-webpack]
   - :heavy_check_mark:   `entry` as a `string` (e.g., `entry: 'src/index.js'`)
   - :heavy_check_mark:   `entry` as an `array` (e.g., `entry: ['src/index.js']`)
@@ -43,9 +47,6 @@ npm install --save @herberttn/bytenode-webpack-plugin
   - :x:   `entry.*.filename` (e.g., `entry: { main: { filename: 'index.js' } }`)
   - :heavy_check_mark:   Dynamic `output.filename` (e.g., `output: { filename: '[name].js' }`)
   - :x:   Static `output.filename` (e.g., `output: { filename: 'index.js' }`)
-
-[link-to-electron-forge]: https://www.npmjs.com/package/electron-forge
-[link-to-webpack]: https://www.npmjs.com/package/webpack
 
 ### Usage
 ```javascript
@@ -96,6 +97,9 @@ new BytenodeWebpackPlugin({
 
 ### Examples
 Sample projects can be found in the [examples](./examples) directory.
+- [examples/electron-forge-typescript-webpack](./examples/electron-forge-typescript-webpack): [`electron-forge`][link-to-electron-forge] with [`typescript-webpack`][link-to-electron-forge-typescript-webpack-template] template
+- [examples/electron-forge-webpack](./examples/electron-forge-webpack): [`electron-forge`][link-to-electron-forge] with [`webpack`][link-to-electron-forge-webpack-template] template
+- [examples/webpack](./examples/webpack): plain node/webpack project
 
 ### Caveats
 
