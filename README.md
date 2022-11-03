@@ -33,8 +33,8 @@ npm install --save @herberttn/bytenode-webpack-plugin
 
 ### Supported features
 - [`electron-forge`][link-to-electron-forge] with [caveats](#electron-forge-support)
-  - :heavy_check_mark:  Default template `webpack`
   - :heavy_check_mark:  Default template `typescript-webpack`
+  - :heavy_check_mark:  Default template `webpack`
 - [`webpack`][link-to-webpack]
   - :heavy_check_mark:   `entry` as a `string` (e.g., `entry: 'src/index.js'`)
   - :heavy_check_mark:   `entry` as an `array` (e.g., `entry: ['src/index.js']`)
@@ -101,8 +101,9 @@ Sample projects can be found in the [examples](./examples) directory.
 
 #### `electron-forge` support
 ##### main process
-You may need to change the default entry configuration for the main process. Probably something like this:
+You may need to change the default entry and output configurations. Probably something like this:
 
+###### webpack.main.config.js
 ```diff
 -  entry: './src/index.ts',
 +  entry: {
@@ -111,15 +112,59 @@ You may need to change the default entry configuration for the main process. Pro
 +  output: {
 +    filename: '[name].js',
 +  },
++  target: 'electron-main',
 ```
+
 ##### renderer process
-You will probably run into [missing node core modules](#missing-node-core-modules).
+You will probably run into [missing node core modules](#missing-node-core-modules). Should probably be fixed by something like this:
+
+###### webpack.renderer.config.js
+```diff
++  target: 'electron-renderer',
+```
+
+##### preload process
+You may need to change the default entry and output configurations. Probably something like this:
+
+###### webpack.preload.config.js
+```diff
+-  entry: './src/preload.ts',
++  entry: {
++    preload: './src/preload.ts',
++  },
++  output: {
++    filename: '[name].js',
++  },
++  target: 'electron-preload',
+```
+
+###### package.json
+```diff
+  "@electron-forge/plugin-webpack",
+  {
+    "mainConfig": "./webpack.main.config.js",
+    "renderer": {
+      "config": "./webpack.renderer.config.js",
+      "entryPoints": [
+        {
+          "html": "./src/index.html",
+          "js": "./src/renderer.ts",
+          "name": "main_window",
++         "preload": {
++           "config": "webpack.preload.config.js"
++         }
+        }
+      ]
+    }
+  }
+```
 
 #### Missing node core modules
 If you run into a webpack error similar to the one below, it's because `bytenode` requires some of node's code modules to properly do its job, and only you can decide the best way to provide them given your configuration.
 
-Two possible solutions:
+Three possible solutions:
 - Set webpack's target to `node`
+- Set webpack's target to an appropriate `electron-*` target, when compiling for electron
 - Provide polyfills for the necessary modules
 >Other solutions may exist.
 
