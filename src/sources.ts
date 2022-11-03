@@ -2,8 +2,7 @@ import Module from 'module';
 import v8 from 'v8';
 
 import { compileCode, compileElectronCode } from 'bytenode';
-// @ts-ignore
-import stripShebang from 'strip-shebang';
+import shebangRegex from 'shebang-regex';
 import { sources } from 'webpack';
 
 import type { Options, Source } from './types';
@@ -12,7 +11,8 @@ v8.setFlagsFromString('--no-lazy');
 
 async function compileSource(source: Source, options: Pick<Options, 'compileAsModule' | 'compileForElectron'>): Promise<Source> {
   return await replaceSource(source, async raw => {
-    raw = stripShebang(raw);
+    // strips shebang or the compiled file may fail to run
+    raw = raw.replace(shebangRegex, '');
 
     if (options.compileAsModule) {
       raw = Module.wrap(raw);
