@@ -1,3 +1,11 @@
+# [2.2.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.1.1...v2.2.0) (2022-11-03)
+
+
+### Features
+
+* add include and exclude options ([5d0e213](https://github.com/herberttn/bytenode-webpack-plugin/commit/5d0e213e810f2eb60587bd6211120f590fa0c611))
+* warn when compiling to but not targeting electron ([cbf0536](https://github.com/herberttn/bytenode-webpack-plugin/commit/cbf05361d5a912522e206de5cdf5d9cd2b7015e3))
+
 ## [2.1.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.1.0...v2.1.1) (2022-10-24)
 
 
