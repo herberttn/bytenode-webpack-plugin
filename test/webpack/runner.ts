@@ -1,6 +1,6 @@
-import { rm } from 'fs/promises';
 import { resolve } from 'path';
 
+import { createFsFromVolume, Volume } from 'memfs';
 import webpack from 'webpack';
 import type { Configuration } from 'webpack';
 import { customizeObject, mergeWithCustomize } from 'webpack-merge';
@@ -20,7 +20,7 @@ const defaultWebpackOptions: Configuration = {
     debug: false,
     level: 'none',
   },
-  mode: 'development',
+  mode: 'production',
   output: {
     path: resolve(__dirname, './output'),
   },
@@ -44,21 +44,22 @@ async function runWebpack(webpackOptions: Configuration, pluginOptions?: Partial
     throw new Error('output.path should be defined');
   }
 
-  await rm(webpackOptions.output.path, {
-    force: true,
-    recursive: true,
-  });
-
   return new Promise((resolve, reject) => {
-    webpack(webpackOptions, (error, stats) => {
+    const compiler = webpack(webpackOptions);
+    const volume = new Volume();
+
+    compiler.outputFileSystem = createFsFromVolume(volume);
+    compiler.run((error, stats) => {
       if (error || stats?.hasErrors()) {
         reject(error ?? stats?.toString());
       }
 
-      const { assets } = stats?.toJson() ?? {};
-      const names = assets?.map(asset => asset.name);
+      if (stats) {
+        const { assets } = stats.toJson();
+        const names = assets?.map(asset => asset.name);
 
-      resolve(names);
+        resolve(names);
+      }
     });
   });
 }
