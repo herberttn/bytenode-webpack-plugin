@@ -1,11 +1,60 @@
 import { basename, extname } from 'path';
 
+import picomatch from 'picomatch';
+import slash from 'slash';
+
+import type { FileMatcher, FileMatcherIntent, FileMatcherIntentMatcher } from './types';
+
 const COMPILED_EXTENSION = '.jsc';
 const COMPILED_EXTENSION_REGEX = new RegExp('\\' + COMPILED_EXTENSION +'$', 'i');
 const LOADER_EXTENSION = '.js';
 const LOADER_SUFFIX = '.loader';
 const TARGET_EXTENSION = '.js';
 const TARGET_EXTENSION_REGEX = new RegExp('\\' + TARGET_EXTENSION +'$', 'i');
+
+function createFileMatcher(includes: FileMatcherIntent[] = [], excludes: FileMatcherIntent[] = []): FileMatcher {
+  if (includes.length <= 0 && excludes.length <= 0) {
+    return function bypass(): boolean {
+      return true;
+    };
+  }
+
+  const includeMatchers = includes.map(createIntentMatcher);
+  const excludeMatchers = excludes.map(createIntentMatcher);
+
+  return function matches(file: string): boolean {
+    file = slash(file);
+
+    for (const matcher of excludeMatchers) {
+      if (matcher.test(file)) {
+        return false;
+      }
+    }
+
+    for (const matcher of includeMatchers) {
+      if (matcher.test(file)) {
+        return true;
+      }
+    }
+
+    return includeMatchers.length <= 0;
+  };
+
+  function createIntentMatcher(intent: FileMatcherIntent): FileMatcherIntentMatcher {
+    if (intent instanceof RegExp) {
+      return intent;
+    }
+
+    return {
+      test(file: string): boolean {
+        const pattern = slash(intent);
+        const matches = picomatch(pattern, { dot: true });
+
+        return matches(file);
+      },
+    };
+  }
+}
 
 function fromCompiledToTargetExtension(file: string): string {
   return file.replace(COMPILED_EXTENSION_REGEX, TARGET_EXTENSION);
@@ -35,6 +84,7 @@ function toSiblingRelativeFileLocation(file: string): string {
 }
 
 export {
+  createFileMatcher,
   fromCompiledToTargetExtension,
   fromTargetToCompiledExtension,
   isCompiledExtension,

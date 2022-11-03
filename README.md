@@ -69,14 +69,19 @@ module.exports = {
 
 ### Options
 ```typescript
+type FileMatcherIntent = string | RegExp; // glob or regex
+
 interface Options {
-  compileAsModule: boolean;    // wraps the code in a node module
-  compileForElectron: boolean; // compiles for electron instead of plain node
-  debugLifecycle: boolean;     // enables webpack hooks lifecycle logs
-  keepSource: boolean;         // emits the original source files along with the compiled ones
-  preventSourceMaps: boolean;  // prevents source maps from being generated
+  compileAsModule: boolean;      // wraps the code in a node module
+  compileForElectron: boolean;   // compiles for electron instead of plain node
+  debugLifecycle: boolean;       // enables webpack hooks lifecycle logs
+  exclude?: FileMatcherIntent[]; // prevents assets from being compiled, accepts glob and regex
+  include?: FileMatcherIntent[]; // filter assets to compile, accepts glob and regex
+  keepSource: boolean;           // emits the original source files along with the compiled ones
+  preventSourceMaps: boolean;    // prevents source maps from being generated
 }
 ```
+> Globs are handled using [`picomatch`](https://www.npmjs.com/package/picomatch)
 
 #### Default options
 ```typescript

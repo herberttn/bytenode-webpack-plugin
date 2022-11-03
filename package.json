@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "bytenode": "^1.3.6",
+    "picomatch": "^2.3.1",
     "shebang-regex": "^3.0.0",
     "slash": "^3.0.0",
     "webpack-virtual-modules": "^0.4.5"
@@ -36,6 +37,7 @@
     "@semantic-release/changelog": "6.0.1",
     "@semantic-release/git": "10.0.1",
     "@types/jest": "29.2.0",
+    "@types/picomatch": "2.3.0",
     "@types/webpack": "5.x",
     "@typescript-eslint/eslint-plugin": "5.41.0",
     "@typescript-eslint/parser": "5.41.0",

@@ -1,14 +1,16 @@
 import type { ValuesType } from 'utility-types';
 import type { EntryNormalized, sources } from 'webpack';
 
-type FilesMatcher = string | RegExp;
+type FileMatcher = (file: string) => boolean;
+type FileMatcherIntent = string | RegExp;
+type FileMatcherIntentMatcher = Pick<RegExp, 'test'>;
 
 interface Options {
   compileAsModule: boolean;
   compileForElectron: boolean;
   debugLifecycle: boolean;
-  exclude?: FilesMatcher[];
-  include?: FilesMatcher[];
+  exclude?: FileMatcherIntent[];
+  include?: FileMatcherIntent[];
   keepSource: boolean;
   preventSourceMaps: boolean;
 }
@@ -32,7 +34,9 @@ type PreparedEntry = Map<string, PreparedEntryDescriptor>;
 type Source = sources.Source;
 
 export type {
-  FilesMatcher,
+  FileMatcher,
+  FileMatcherIntent,
+  FileMatcherIntentMatcher,
   Options,
   Prepared,
   PreparedEntries,

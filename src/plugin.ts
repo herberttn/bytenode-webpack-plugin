@@ -6,7 +6,7 @@ import VirtualModulesPlugin from 'webpack-virtual-modules';
 import { createLoaderCode } from './loaders';
 import { compileSource, replaceSource } from './sources';
 import type { Options, Prepared, PreparedEntries, PreparedEntry, Source } from './types';
-import { fromTargetToCompiledExtension, isTargetExtension, toLoaderFileName, toSiblingRelativeFileLocation } from './utils';
+import { createFileMatcher, fromTargetToCompiledExtension, isTargetExtension, toLoaderFileName, toSiblingRelativeFileLocation } from './utils';
 
 class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
@@ -67,6 +67,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
     // ensure hooks run last by tapping after the other plugins
     compiler.hooks.afterPlugins.tap(this.name, () => {
+      const matches = createFileMatcher(this.options.include, this.options.exclude);
 
       compiler.hooks.compilation.tap(this.name, compilation => {
         const logger = compilation.getLogger(this.name);
@@ -91,7 +92,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
             if (loaderEntryFiles.includes(name)) {
               await updateLoaderToRequireCompiledAssets(compilation, name, asset, targetEntryFiles);
-            } else if (isTargetExtension(name)) {
+            } else if (isTargetExtension(name) && matches(name)) {
               await updateTargetWithCompiledCode(compilation, name, asset, this.options);
             }
 
