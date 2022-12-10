@@ -1,8 +1,9 @@
-import { resolve } from 'path';
+import { readFile } from 'fs/promises';
+import { join, resolve } from 'path';
 
 import { createFsFromVolume, Volume } from 'memfs';
 import webpack from 'webpack';
-import type { Configuration } from 'webpack';
+import type { Configuration, StatsAsset } from 'webpack';
 import { customizeObject, mergeWithCustomize } from 'webpack-merge';
 
 import { BytenodeWebpackPlugin } from '../../src';
@@ -33,7 +34,17 @@ const defaultWebpackOptions: Configuration = {
   target: 'node',
 };
 
-async function runWebpack(webpackOptions: Configuration, pluginOptions?: Partial<Options>): Promise<string[] | undefined> {
+interface WebpackRunAsset extends StatsAsset {
+  content: string | null;
+  path: string;
+}
+
+interface WebpackRunResult {
+  assets: Record<string, WebpackRunAsset>;
+  names: string[];
+}
+
+async function runWebpack(webpackOptions: Configuration, pluginOptions?: Partial<Options>): Promise<WebpackRunResult> {
   webpackOptions = merge(defaultWebpackOptions, webpackOptions, {
     plugins: [
       new BytenodeWebpackPlugin(pluginOptions),
@@ -56,15 +67,43 @@ async function runWebpack(webpackOptions: Configuration, pluginOptions?: Partial
 
       if (stats) {
         const { assets } = stats.toJson();
-        const names = assets?.map(asset => asset.name);
 
-        resolve(names);
+        const files = volume.toJSON();
+        const result: WebpackRunResult = {
+          assets: {},
+          names: [],
+        };
+
+        if (assets) {
+          result.names.push(...assets.map(asset => asset.name).sort());
+
+          for (const asset of assets as WebpackRunAsset[]) {
+            const path = join(compiler.outputPath, asset.name);
+
+            asset.content = files[path];
+            asset.path = path;
+
+            result.assets[asset.name] = asset;
+          }
+        }
+
+        resolve(result);
       }
     });
   });
 }
 
+async function readFixtureContent(location: string): Promise<string> {
+  const buffer = await readFile(resolve(defaultWebpackOptions.context as string, location));
+  const content = buffer.toString();
+
+  return content
+    .replaceAll('\n', '')
+    .replaceAll('\'', '\"'); // eslint-disable-line no-useless-escape
+}
+
 export {
+  readFixtureContent,
   runWebpack,
 };
 

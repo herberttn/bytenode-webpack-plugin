@@ -11,9 +11,9 @@ describe('plugin option: include', () => {
   };
 
   test('empty means all', async () => {
-    const assets = await runWebpack(webpackOptions);
+    const { names } = await runWebpack(webpackOptions);
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.jsc',
       'firstNamed.js',
       'secondNamed.compiled.jsc',
@@ -24,13 +24,13 @@ describe('plugin option: include', () => {
   });
 
   test('accepts regex', async () => {
-    const assets = await runWebpack(webpackOptions, {
+    const { names } = await runWebpack(webpackOptions, {
       include: [
         /first/,
       ],
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.jsc',
       'firstNamed.js',
       'secondNamed.compiled.js',
@@ -41,13 +41,13 @@ describe('plugin option: include', () => {
   });
 
   test('accepts pattern', async () => {
-    const assets = await runWebpack(webpackOptions, {
+    const { names } = await runWebpack(webpackOptions, {
       include: [
         'first*',
       ],
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.jsc',
       'firstNamed.js',
       'secondNamed.compiled.js',

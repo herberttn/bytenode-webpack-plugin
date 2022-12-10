@@ -3,11 +3,11 @@ import { runWebpack } from './runner';
 describe('entry dependency', () => {
 
   test('should just work', async () => {
-    const assets = await runWebpack({
+    const { names } = await runWebpack({
       entry: './fixtures/dependency.js',
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'main.compiled.jsc',
       'main.js',
     ]);

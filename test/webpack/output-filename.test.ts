@@ -14,14 +14,14 @@ describe('output filename', () => {
   });
 
   test('should support dynamic filename', async () => {
-    const assets = await runWebpack({
+    const { names } = await runWebpack({
       entry: './fixtures/first.js',
       output: {
         filename: '[name].js',
       },
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'main.compiled.jsc',
       'main.js',
     ]);

@@ -3,20 +3,20 @@ import { runWebpack } from './runner';
 describe('entry as an object', () => {
 
   test('should support one named entry', async () => {
-    const assets = await runWebpack({
+    const { names } = await runWebpack({
       entry: {
         named: './fixtures/first.js',
       },
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'named.compiled.jsc',
       'named.js',
     ]);
   });
 
   test('should support more than one named entry', async () => {
-    const assets = await runWebpack({
+    const { names } = await runWebpack({
       entry: {
         firstNamed: './fixtures/first.js',
         secondNamed: './fixtures/second.js',
@@ -24,7 +24,7 @@ describe('entry as an object', () => {
       },
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.jsc',
       'firstNamed.js',
       'secondNamed.compiled.jsc',

@@ -1,6 +1,12 @@
-import { runWebpack } from './runner';
+import { readFixtureContent, runWebpack } from './runner';
 
 describe('runner', () => {
+
+  test('should be able to read and normalize fixture content', async () => {
+    const content = await readFixtureContent('./fixtures/first.js');
+
+    expect(content).toStrictEqual('console.log(\"first\")'); // eslint-disable-line no-useless-escape
+  });
 
   test('should reject an invalid entry', async () => {
     const runner = runWebpack({

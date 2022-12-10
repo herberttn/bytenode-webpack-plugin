@@ -11,9 +11,9 @@ describe('plugin option: exclude', () => {
   };
 
   test('empty means all', async () => {
-    const assets = await runWebpack(webpackOptions);
+    const { names } = await runWebpack(webpackOptions);
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.jsc',
       'firstNamed.js',
       'secondNamed.compiled.jsc',
@@ -24,13 +24,13 @@ describe('plugin option: exclude', () => {
   });
 
   test('accepts regex', async () => {
-    const assets = await runWebpack(webpackOptions, {
+    const { names } = await runWebpack(webpackOptions, {
       exclude: [
         /first/,
       ],
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.js',
       'firstNamed.js',
       'secondNamed.compiled.jsc',
@@ -41,13 +41,13 @@ describe('plugin option: exclude', () => {
   });
 
   test('accepts pattern', async () => {
-    const assets = await runWebpack(webpackOptions, {
+    const { names } = await runWebpack(webpackOptions, {
       exclude: [
         'first*',
       ],
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.js',
       'firstNamed.js',
       'secondNamed.compiled.jsc',
@@ -58,7 +58,7 @@ describe('plugin option: exclude', () => {
   });
 
   test('overrides include', async () => {
-    const assets = await runWebpack(webpackOptions, {
+    const { names } = await runWebpack(webpackOptions, {
       exclude: [
         /first/,
       ],
@@ -68,7 +68,7 @@ describe('plugin option: exclude', () => {
       ],
     });
 
-    expect(assets?.sort()).toStrictEqual([
+    expect(names).toStrictEqual([
       'firstNamed.compiled.js',
       'firstNamed.js',
       'secondNamed.compiled.jsc',
