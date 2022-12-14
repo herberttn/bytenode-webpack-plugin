@@ -1,5 +1,6 @@
 import { dirname, relative, resolve } from 'path';
 
+import replaceString from 'replace-string';
 import type { Hook } from 'tapable';
 import { Compilation, ExternalsPlugin } from 'webpack';
 import type { Compiler, WebpackPluginInstance } from 'webpack';
@@ -172,7 +173,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
                 logger.debug('  from:', from);
                 logger.debug('    to:', to);
 
-                raw = raw.replaceAll(from, to);
+                raw = replaceString(raw, from, to);
               }
             }
 
@@ -183,7 +184,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
               logger.debug('  from:', file);
               logger.debug('    to:', fromTargetToCompiledExtension(file));
 
-              raw = raw.replaceAll(file, fromTargetToCompiledExtension(file));
+              raw = replaceString(raw, file, fromTargetToCompiledExtension(file));
             }
 
             return raw;

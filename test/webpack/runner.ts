@@ -2,6 +2,7 @@ import { readFile } from 'fs/promises';
 import { join, resolve } from 'path';
 
 import { createFsFromVolume, Volume } from 'memfs';
+import replaceString from 'replace-string';
 import webpack from 'webpack';
 import type { Configuration, StatsAsset } from 'webpack';
 import { customizeObject, mergeWithCustomize } from 'webpack-merge';
@@ -96,11 +97,13 @@ async function runWebpack(webpackOptions: Configuration, pluginOptions?: Partial
 
 async function readFixtureContent(location: string): Promise<string> {
   const buffer = await readFile(resolve(defaultWebpackOptions.context as string, location));
-  const content = buffer.toString();
 
-  return content
-    .replaceAll('\n', '')
-    .replaceAll('\'', '\"'); // eslint-disable-line no-useless-escape
+  let content = buffer.toString();
+
+  content = replaceString(content, '\n', '');
+  content = replaceString(content, '\'', '\"'); // eslint-disable-line no-useless-escape
+
+  return content;
 }
 
 export {

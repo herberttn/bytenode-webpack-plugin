@@ -30,6 +30,7 @@
     "picomatch": "^2.3.1",
     "shebang-regex": "^3.0.0",
     "slash": "^3.0.0",
+    "replace-string": "^3.1.0",
     "webpack-virtual-modules": "^0.5.0"
   },
   "peerDependencies": {
