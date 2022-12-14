@@ -100,8 +100,9 @@ async function readFixtureContent(location: string): Promise<string> {
 
   let content = buffer.toString();
 
-  content = replaceString(content, '\n', '');
   content = replaceString(content, '\'', '\"'); // eslint-disable-line no-useless-escape
+  content = replaceString(content, '\n', '');
+  content = replaceString(content, '\r', '');
 
   return content;
 }
