@@ -1,8 +1,10 @@
 import { readFile } from 'fs/promises';
+import { platform } from 'os';
 import { join, resolve } from 'path';
 
 import { createFsFromVolume, Volume } from 'memfs';
 import replaceString from 'replace-string';
+import slash from 'slash';
 import webpack from 'webpack';
 import type { Configuration, StatsAsset } from 'webpack';
 import { customizeObject, mergeWithCustomize } from 'webpack-merge';
@@ -80,7 +82,11 @@ async function runWebpack(webpackOptions: Configuration, pluginOptions?: Partial
           result.names.push(...assets.map(asset => asset.name).sort());
 
           for (const asset of assets as WebpackRunAsset[]) {
-            const path = join(compiler.outputPath, asset.name);
+            let path = slash(join(compiler.outputPath, asset.name));
+
+            if (platform() === 'win32') {
+              path = path.substring(path.indexOf(':') + 1);
+            }
 
             asset.content = files[path];
             asset.path = path;
