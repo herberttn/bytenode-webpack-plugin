@@ -1,6 +1,6 @@
 import { runWebpack } from './runner';
 
-describe('output filename', () => {
+describe('output', () => {
 
   test('should not support static filename', async () => {
     const assets = runWebpack({

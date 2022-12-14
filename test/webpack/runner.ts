@@ -16,6 +16,7 @@ const merge = mergeWithCustomize<Configuration>({
 });
 
 const defaultWebpackOptions: Configuration = {
+  cache: false,
   context: __dirname,
   infrastructureLogging: {
     debug: false,
