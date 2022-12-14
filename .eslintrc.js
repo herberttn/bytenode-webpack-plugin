@@ -44,7 +44,7 @@ function commonRules() {
     'comma-style': 'error',
     'computed-property-spacing': ['error', 'never'],
     'eol-last': ['error', 'always'],
-    'linebreak-style': ['error', 'unix'],
+    'linebreak-style': 'off',
     'import/extensions': ['error', {
       js: 'never',
       json: 'always',
