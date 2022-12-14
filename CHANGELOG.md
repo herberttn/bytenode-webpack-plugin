@@ -1,3 +1,15 @@
+# [2.3.0-rc.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.2.0...v2.3.0-rc.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* ensure node v14 support ([b806764](https://github.com/herberttn/bytenode-webpack-plugin/commit/b806764f8b917aa1493114c69c1932ea8b982e34))
+
+
+### Features
+
+* make sure code is not inlined into loader ([50ca69d](https://github.com/herberttn/bytenode-webpack-plugin/commit/50ca69dcf7a9b11c70fe32a2fa8d1173104c1f8c))
+
 # [2.2.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.1.1...v2.2.0) (2022-11-03)
 
 
