@@ -11,24 +11,38 @@ on:
       - '**.md'
 
 env:
-  node: 18
+  coveralls_branch: main
+  coveralls_node: current
+  coveralls_runner: ubuntu-latest
 
 jobs:
-
-  task:
-    runs-on: ubuntu-latest
+  blt:
+    name: BLT
+    runs-on: ${{ matrix.runner }}
     strategy:
+      fail-fast: false
       matrix:
-        task: [lint, build, test]
+        node:
+          - 14
+          - 16
+          - 18
+          - lts/*
+          - current
+        runner:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           cache: npm
-          node-version: ${{ env.node }}
+          node-version: ${{ matrix.node }}
       - run: npm ci
-      - run: npm run ${{ matrix.task }}
-      - if: ${{ matrix.task == 'test' }}
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run test
+      - if: ${{ env.coveralls_branch == github.ref_name && env.coveralls_node == matrix.node && env.coveralls_runner == matrix.runner }}
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ github.token }}
