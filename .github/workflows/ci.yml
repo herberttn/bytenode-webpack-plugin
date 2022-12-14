@@ -29,7 +29,6 @@ jobs:
           - lts/*
           - current
         runner:
-          - macos-latest
           - ubuntu-latest
           - windows-latest
     steps:
