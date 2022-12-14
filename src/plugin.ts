@@ -1,3 +1,5 @@
+import { dirname, relative, resolve } from 'path';
+
 import type { Hook } from 'tapable';
 import { Compilation, ExternalsPlugin } from 'webpack';
 import type { Compiler, WebpackPluginInstance } from 'webpack';
@@ -31,6 +33,10 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
     logger.debug('original webpack.options.entry', compiler.options.entry);
 
     const { entries: { ignored, loaders, targets }, modules } = prepare(compiler);
+    logger.debug('prepared ignores', Object.fromEntries(ignored.entries()));
+    logger.debug('prepared loaders', Object.fromEntries(loaders.entries()));
+    logger.debug('prepared targets', Object.fromEntries(targets.entries()));
+    logger.debug('prepared modules', Object.fromEntries(modules.entries()));
 
     compiler.options.entry = Object.fromEntries([
       ...ignored.entries(),
@@ -62,64 +68,135 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
     new ExternalsPlugin('commonjs', ['electron'])
       .apply(compiler);
 
+    logger.debug('adding target imports from loader code as external');
+    new ExternalsPlugin('commonjs', ({ context, contextInfo, request }, callback) => {
+      if (context && contextInfo && request) {
+        const requestLocation = resolve(context, request);
+
+        if (contextInfo.issuer === toLoaderFileName(requestLocation)) {
+          for (const target of Array.from(targets.values()).flatMap(target => target.import)) {
+            const targetLocation = resolve(compiler.context, target);
+
+            if (target === request || targetLocation === requestLocation) {
+              logger.debug('external: context', { context, contextInfo, request, requestLocation, target, targetLocation });
+              logger.debug('external: resolved to', target);
+
+              return callback(undefined, target);
+            }
+          }
+        }
+      }
+
+      return callback();
+    }).apply(compiler);
+
     new VirtualModulesPlugin(Object.fromEntries(modules.entries()))
       .apply(compiler);
 
     // ensure hooks run last by tapping after the other plugins
     compiler.hooks.afterPlugins.tap(this.name, () => {
+      logger.debug('hook: after plugins');
       const matches = createFileMatcher(this.options.include, this.options.exclude);
 
       compiler.hooks.compilation.tap(this.name, compilation => {
-        const logger = compilation.getLogger(this.name);
-        const loaderEntryFiles: string[] = [];
-        const targetEntryFiles: string[] = [];
+        logger.debug('hook: compilation');
+
+        const stats = compilation.getLogger(this.name);
+        const loaderOutputFiles: string[] = [];
+        const targetOutputFiles: string[] = [];
 
         compilation.hooks.processAssets.tap({ name: this.name, stage: Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS }, (): void => {
-          logger.time('collect asset names');
+          logger.debug('hook: process assets');
+          stats.time('collect asset names');
 
-          loaderEntryFiles.push(...collectEntryFiles(compilation, loaders));
-          targetEntryFiles.push(...collectEntryFiles(compilation, targets));
+          loaderOutputFiles.push(...collectOutputFiles(compilation, loaders));
+          logger.debug('collected: loader output files', loaderOutputFiles);
 
-          logger.timeEnd('collect asset names');
+          targetOutputFiles.push(...collectOutputFiles(compilation, targets));
+          logger.debug('collected: target output files', targetOutputFiles);
+
+          stats.timeEnd('collect asset names');
         });
 
         compilation.hooks.processAssets.tapPromise({ name: this.name, stage: Compilation.PROCESS_ASSETS_STAGE_DERIVED }, async (assets): Promise<void> => {
-          logger.time('process assets');
+          logger.debug('hook: process assets promise');
+          stats.time('process assets');
 
           for (const [name, asset] of Object.entries(assets)) {
-            logger.group('asset', name);
-            logger.time('took');
+            stats.group('asset', name);
+            stats.time('took');
 
-            if (loaderEntryFiles.includes(name)) {
-              await updateLoaderToRequireCompiledAssets(compilation, name, asset, targetEntryFiles);
+            if (loaderOutputFiles.includes(name)) {
+              await updateLoaderToRequireCompiledAssets(compilation, name, asset);
             } else if (isTargetExtension(name) && matches(name)) {
               await updateTargetWithCompiledCode(compilation, name, asset, this.options);
             }
 
-            logger.timeEnd('took');
-            logger.groupEnd('asset', name);
+            stats.timeEnd('took');
+            stats.groupEnd('asset', name);
           }
 
-          logger.timeEnd('process assets');
+          stats.timeEnd('process assets');
         });
+
+        async function updateLoaderToRequireCompiledAssets(compilation: Compilation, name: string, asset: Source): Promise<void> {
+          logger.debug('updating loader to require compiled assets', { name });
+
+          const source = await replaceSource(asset, raw => {
+            logger.debug('initializing external target replacer');
+            logger.debug({ outputPath: compiler.outputPath });
+
+            for (let index = 0; index < targets.size; index++) {
+              const target = Array.from(targets.values())[index];
+              const fromLocation = loaderOutputFiles[index];
+              const toLocation = targetOutputFiles[index];
+
+              logger.debug('replacer', { name, target: { name: Array.from(targets.keys())[index], ...target }, fromLocation, toLocation });
+
+              let to = relative(dirname(fromLocation), toLocation);
+
+              if (!to.startsWith('.')) {
+                to = toSiblingRelativeFileLocation(to);
+              }
+
+              // Use absolute path to load the compiled file in dev mode due to how electron-forge handles
+              // the renderer process code loading (by using a server and not directly from the file system).
+              // This should be safe exactly because it will only be used in dev mode, so the app code will
+              // never be relocated after compiling with webpack and before starting electron.
+              if (compiler.options.mode === 'development' && compiler.options.target === 'electron-renderer') {
+                to = resolve(compiler.outputPath, toLocation);
+              }
+
+              for (const from of target.import) {
+                logger.debug('replacing within', name);
+                logger.debug('  from:', from);
+                logger.debug('    to:', to);
+
+                raw = raw.replaceAll(from, to);
+              }
+            }
+
+            logger.debug('initializing compiled target replacer');
+
+            for (const file of targetOutputFiles) {
+              logger.debug('replacing within', name);
+              logger.debug('  from:', file);
+              logger.debug('    to:', fromTargetToCompiledExtension(file));
+
+              raw = raw.replaceAll(file, fromTargetToCompiledExtension(file));
+            }
+
+            return raw;
+          });
+
+          compilation.updateAsset(name, source);
+        }
+
       });
     });
 
-    async function updateLoaderToRequireCompiledAssets(compilation: Compilation, name: string, asset: Source, files: string[]): Promise<void> {
-      logger.debug('updating loader to require compiled assets');
-
-      const source = await replaceSource(asset, raw => {
-        for (const file of files) {
-          raw = raw.replace(file, fromTargetToCompiledExtension(file));
-        }
-        return raw;
-      });
-
-      compilation.updateAsset(name, source);
-    }
-
     async function updateTargetWithCompiledCode(compilation: Compilation, name: string, asset: Source, options: Options): Promise<void> {
-      logger.debug('compiling asset source');
+      logger.debug('compiling asset source', { name });
       const source = await compileSource(asset, options);
 
       logger.debug('updating asset source with the compiled content');
@@ -140,7 +217,7 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
   }
 }
 
-function collectEntryFiles(compilation: Compilation, from: PreparedEntry): string[] {
+function collectOutputFiles(compilation: Compilation, from: PreparedEntry): string[] {
   const files = [];
 
   for (const name of from.keys()) {

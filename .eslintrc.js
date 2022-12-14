@@ -98,10 +98,7 @@ function commonRules() {
       ignoreDeclarationSort: true,
       ignoreMemberSort: false,
     }],
-    'sort-keys': ['error', 'asc', {
-      caseSensitive: false,
-      natural: true,
-    }],
+    'sort-keys': 'off',
     'sort-vars': ['error', {
       ignoreCase: true,
     }],

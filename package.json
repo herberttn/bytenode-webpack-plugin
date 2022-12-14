@@ -17,17 +17,20 @@
     "build": "tsc --build tsconfig.project.json",
     "build:watch": "npm run build -- --watch",
     "clean": "rimraf lib **/.eslintcache **/*.log **/*.tsbuildinfo",
+    "examples:electron-forge-typescript-webpack": "cd examples/electron-forge-typescript-webpack && npm run start",
+    "examples:electron-forge-webpack": "cd examples/electron-forge-webpack && npm run start",
+    "examples:webpack": "cd examples/webpack && npm run make",
     "lint": "eslint . --ext .js,.ts --cache --max-warnings 0",
     "release": "semantic-release",
     "test": "jest --config jest.config.ts --detectOpenHandles",
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
-    "bytenode": "^1.3.6",
+    "bytenode": "^1.3.7",
     "picomatch": "^2.3.1",
     "shebang-regex": "^3.0.0",
     "slash": "^3.0.0",
-    "webpack-virtual-modules": "^0.4.5"
+    "webpack-virtual-modules": "^0.5.0"
   },
   "peerDependencies": {
     "webpack": "5.x"
@@ -52,7 +55,7 @@
     "ts-node": "10.9.1",
     "typescript": "4.8.4",
     "utility-types": "3.10.0",
-    "webpack-cli": "4.10.0",
+    "webpack-cli": "5.0.1",
     "webpack-merge": "5.8.0"
   },
   "engines": {
