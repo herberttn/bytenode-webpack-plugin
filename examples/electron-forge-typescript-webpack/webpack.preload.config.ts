@@ -2,7 +2,7 @@ import { Configuration } from "webpack";
 import rules from "./webpack.rules";
 import plugins from "./webpack.plugins";
 
-const config: Configuration = {
+export const preloadConfig: Configuration = {
   entry: {
     preload: "./src/preload.ts",
   },
@@ -10,8 +10,8 @@ const config: Configuration = {
     rules,
   },
   output: {
-    devtoolModuleFilenameTemplate: "[absolute-resource-path]",
     filename: "[name].js",
+    devtoolModuleFilenameTemplate: "[absolute-resource-path]",
   },
   plugins,
   resolve: {
