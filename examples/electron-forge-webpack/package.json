@@ -37,7 +37,8 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "electron_forge_webpack"
+            "name": "electron_forge_webpack",
+            "description": "electron_forge_webpack"
           }
         },
         {
