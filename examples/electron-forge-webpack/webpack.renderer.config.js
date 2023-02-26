@@ -1,7 +1,7 @@
-const rules = require('./webpack.rules');
-const plugins = require('./webpack.plugins');
+const { rules } = require('./webpack.shared.rules');
+const { plugins } = require('./webpack.shared.plugins');
 
-module.exports = {
+const rendererConfig = {
   module: {
     rules: [
       ...rules,
@@ -14,6 +14,13 @@ module.exports = {
       },
     ],
   },
+  output: {
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+  },
   plugins,
   target: 'electron-renderer',
+};
+
+module.exports = {
+  rendererConfig,
 };

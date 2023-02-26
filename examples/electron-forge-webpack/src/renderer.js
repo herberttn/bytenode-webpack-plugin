@@ -26,6 +26,6 @@
  * ```
  */
 
-import './index.css';
+require('./renderer.css');
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+console.log('🍕 This message is being logged by "src/renderer.js", included via webpack.');

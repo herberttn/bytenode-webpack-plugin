@@ -1,5 +1,6 @@
 {
   "name": "electron-forge-webpack-example",
+  "description": "Description of electron-forge-webpack-example",
   "version": "1.0.0",
   "license": "MIT",
   "author": {
@@ -7,72 +8,32 @@
   },
   "main": ".webpack/main",
   "scripts": {
-    "start": "electron-forge start",
+    "clean": "rimraf .eslintcache .webpack out",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --cache --max-warnings 0",
+    "make": "npm run clean && electron-forge make",
     "package": "electron-forge package",
-    "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "start": "npm run clean && electron-forge start"
   },
   "dependencies": {
     "electron-squirrel-startup": "1.0.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "6.0.0-beta.67",
-    "@electron-forge/maker-deb": "6.0.0-beta.67",
-    "@electron-forge/maker-rpm": "6.0.0-beta.67",
-    "@electron-forge/maker-squirrel": "6.0.0-beta.67",
-    "@electron-forge/maker-zip": "6.0.0-beta.67",
-    "@electron-forge/plugin-webpack": "6.0.0-beta.67",
-    "@herberttn/bytenode-webpack-plugin": "2.1.1",
-    "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
-    "css-loader": "6.7.1",
-    "electron": "21.2.0",
+    "@electron-forge/cli": "6.0.5",
+    "@electron-forge/maker-deb": "6.0.5",
+    "@electron-forge/maker-rpm": "6.0.5",
+    "@electron-forge/maker-squirrel": "6.0.5",
+    "@electron-forge/maker-zip": "6.0.5",
+    "@electron-forge/plugin-webpack": "6.0.5",
+    "@herberttn/bytenode-webpack-plugin": "2.3.0",
+    "@vercel/webpack-asset-relocator-loader": "1.7.3",
+    "css-loader": "6.7.3",
+    "electron": "23.1.1",
+    "eslint": "8.35.0",
+    "eslint-plugin-import": "2.27.5",
+    "load-json-file": "6.2.0",
     "node-loader": "2.0.0",
+    "rimraf": "4.1.2",
     "style-loader": "3.3.1"
-  },
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "electron_forge_webpack"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "plugins": [
-        [
-          "@electron-forge/plugin-webpack",
-          {
-            "mainConfig": "./webpack.main.config.js",
-            "renderer": {
-              "config": "./webpack.renderer.config.js",
-              "entryPoints": [
-                {
-                  "html": "./src/index.html",
-                  "js": "./src/renderer.js",
-                  "name": "main_window"
-                }
-              ]
-            }
-          }
-        ]
-      ]
-    }
   }
 }

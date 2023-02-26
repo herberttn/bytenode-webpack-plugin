@@ -1,9 +1,9 @@
 const { rules } = require('./webpack.shared.rules');
 const { plugins } = require('./webpack.shared.plugins');
 
-const mainConfig = {
+const preloadConfig = {
   entry: {
-    index: './src/main.js',
+    preload: './src/preload.js',
   },
   module: {
     rules,
@@ -13,9 +13,9 @@ const mainConfig = {
     filename: '[name].js',
   },
   plugins,
-  target: 'electron-main',
+  target: 'electron-preload',
 };
 
 module.exports = {
-  mainConfig,
+  preloadConfig,
 };

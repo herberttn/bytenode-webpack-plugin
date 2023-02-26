@@ -1,3 +1,5 @@
+const { resolve } = require('path');
+
 const { BytenodeWebpackPlugin } = require('@herberttn/bytenode-webpack-plugin');
 
 module.exports = {
@@ -12,6 +14,7 @@ module.exports = {
   mode: 'production',
   output: {
     filename: '[name]-[contenthash].js',
+    path: resolve(__dirname, 'out'),
   },
   plugins: [
     new BytenodeWebpackPlugin(),

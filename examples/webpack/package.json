@@ -1,18 +1,22 @@
 {
   "name": "webpack-example",
+  "description": "Description of webpack-example",
   "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "herberttn"
   },
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf .eslintcache .webpack out",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --cache --max-warnings 0",
     "make": "npm run clean && webpack-cli"
   },
   "devDependencies": {
-    "@herberttn/bytenode-webpack-plugin": "2.1.1",
-    "rimraf": "3.0.2",
+    "@herberttn/bytenode-webpack-plugin": "2.3.0",
+    "eslint": "8.35.0",
+    "eslint-plugin-import": "2.27.5",
+    "rimraf": "4.1.2",
     "webpack": "5.x",
-    "webpack-cli": "4.10.0"
+    "webpack-cli": "5.0.1"
   }
 }

@@ -1,12 +1,12 @@
-import type { ModuleOptions } from "webpack";
+import type { Configuration } from 'webpack';
 
-const rules: Required<ModuleOptions>['rules'] = [
+const rules: Required<Configuration>['module']['rules'] = [
   // Add support for native node modules
   {
     // We're specifying native_modules in the test because the asset relocator loader generates a
     // "fake" .node file which is really a cjs file.
     test: /native_modules[/\\].+\.node$/,
-    use: "node-loader",
+    use: 'node-loader',
   },
   {
     test: /[/\\]node_modules[/\\].+\.(m?js|node)$/,
@@ -14,7 +14,7 @@ const rules: Required<ModuleOptions>['rules'] = [
     use: {
       loader: '@vercel/webpack-asset-relocator-loader',
       options: {
-        outputAssetBase: "native_modules",
+        outputAssetBase: 'native_modules',
       },
     },
   },
@@ -22,7 +22,7 @@ const rules: Required<ModuleOptions>['rules'] = [
     test: /\.tsx?$/,
     exclude: /(node_modules|\.webpack)/,
     use: {
-      loader: "ts-loader",
+      loader: 'ts-loader',
       options: {
         transpileOnly: true,
       },
@@ -31,4 +31,6 @@ const rules: Required<ModuleOptions>['rules'] = [
   // Put your webpack loader rules in this array.
 ];
 
-export default rules;
+export {
+  rules,
+};

@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron';
-declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
+
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -13,14 +14,14 @@ const createWindow = (): void => {
     height: 600,
     width: 800,
     webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
       contextIsolation: false,
       nodeIntegration: true,
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  void mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

@@ -45,3 +45,34 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ github.token }}
+  example:
+    name: Example
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - examples/electron-forge-typescript-webpack
+          - examples/electron-forge-webpack
+          - examples/webpack
+        node:
+          - 14
+          - 16
+          - 18
+          - lts/*
+          - current
+        runner:
+          - ubuntu-latest
+          - windows-latest
+    defaults:
+      run:
+        working-directory: ${{ matrix.example }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: npm
+          node-version: ${{ matrix.node }}
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run make

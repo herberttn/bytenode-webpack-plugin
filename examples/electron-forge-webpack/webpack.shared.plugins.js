@@ -1,7 +1,11 @@
 const { BytenodeWebpackPlugin } = require('@herberttn/bytenode-webpack-plugin');
 
-module.exports = [
+const plugins = [
   new BytenodeWebpackPlugin({
     compileForElectron: true,
   }),
 ];
+
+module.exports = {
+  plugins,
+};

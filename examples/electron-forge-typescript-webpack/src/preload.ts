@@ -1,3 +1,1 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('👋 This message is being logged by "preload.js", included via webpack');
-});
+console.log('🍕 This message is being logged by "src/preload.ts", included via webpack.');

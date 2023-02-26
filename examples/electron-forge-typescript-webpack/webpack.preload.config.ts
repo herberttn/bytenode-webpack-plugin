@@ -1,21 +1,26 @@
-import { Configuration } from "webpack";
-import rules from "./webpack.rules";
-import plugins from "./webpack.plugins";
+import type { Configuration } from 'webpack';
 
-export const preloadConfig: Configuration = {
+import { rules } from './webpack.shared.rules';
+import { plugins } from './webpack.shared.plugins';
+
+const preloadConfig: Configuration = {
   entry: {
-    preload: "./src/preload.ts",
+    preload: './src/preload.ts',
   },
   module: {
     rules,
   },
   output: {
-    filename: "[name].js",
-    devtoolModuleFilenameTemplate: "[absolute-resource-path]",
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    filename: '[name].js',
   },
   plugins,
   resolve: {
-    extensions: [".js", ".ts", ".jsx", ".tsx", ".css", ".json"],
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
   },
-  target: "electron-preload",
+  target: 'electron-preload',
+};
+
+export {
+  preloadConfig,
 };

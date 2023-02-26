@@ -1,19 +1,18 @@
-import type { Configuration } from "webpack";
-import rules from "./webpack.rules";
-import plugins from "./webpack.plugins";
+import type { Configuration } from 'webpack';
 
-export const mainConfig: Configuration = {
-  /**
-   * This is the main entry point for your application, it's the first file
-   * that runs in the main process.
-   */
-  entry: './src/index.ts',
-  // Put your normal webpack config below here
-  output: {
-    filename: '[name].js',
+import { rules } from './webpack.shared.rules';
+import { plugins } from './webpack.shared.plugins';
+
+const mainConfig: Configuration = {
+  entry: {
+    index: './src/main.ts',
   },
   module: {
     rules,
+  },
+  output: {
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    filename: '[name].js',
   },
   plugins,
   resolve: {
@@ -22,3 +21,6 @@ export const mainConfig: Configuration = {
   target: 'electron-main',
 };
 
+export {
+  mainConfig,
+};

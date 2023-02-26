@@ -1,14 +1,15 @@
 {
   "name": "electron-forge-typescript-webpack-example",
+  "description": "Description of electron-forge-typescript-webpack-example",
   "version": "1.0.0",
   "license": "MIT",
   "author": {
     "name": "herberttn"
   },
-  "main": ".webpack/main/main.js",
+  "main": ".webpack/main",
   "scripts": {
-    "clean": "rimraf .webpack out",
-    "lint": "eslint --ext .ts .",
+    "clean": "rimraf .eslintcache .webpack out",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --cache --max-warnings 0",
     "make": "npm run clean && electron-forge make",
     "package": "electron-forge package",
     "publish": "electron-forge publish",
@@ -18,26 +19,27 @@
     "electron-squirrel-startup": "1.0.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "6.0.4",
-    "@electron-forge/maker-deb": "6.0.4",
-    "@electron-forge/maker-rpm": "6.0.4",
-    "@electron-forge/maker-squirrel": "6.0.4",
-    "@electron-forge/maker-zip": "6.0.4",
-    "@electron-forge/plugin-webpack": "6.0.4",
+    "@electron-forge/cli": "6.0.5",
+    "@electron-forge/maker-deb": "6.0.5",
+    "@electron-forge/maker-rpm": "6.0.5",
+    "@electron-forge/maker-squirrel": "6.0.5",
+    "@electron-forge/maker-zip": "6.0.5",
+    "@electron-forge/plugin-webpack": "6.0.5",
     "@herberttn/bytenode-webpack-plugin": "2.3.0",
-    "@typescript-eslint/eslint-plugin": "5.47.0",
-    "@typescript-eslint/parser": "5.47.0",
-    "@vercel/webpack-asset-relocator-loader": "^1.7.3",
+    "@typescript-eslint/eslint-plugin": "5.53.0",
+    "@typescript-eslint/parser": "5.53.0",
+    "@vercel/webpack-asset-relocator-loader": "1.7.3",
     "css-loader": "6.7.3",
-    "electron": "22.0.0",
-    "eslint": "8.30.0",
-    "eslint-plugin-import": "2.26.0",
-    "fork-ts-checker-webpack-plugin": "7.2.14",
+    "electron": "23.1.1",
+    "eslint": "8.35.0",
+    "eslint-plugin-import": "2.27.5",
+    "fork-ts-checker-webpack-plugin": "7.3.0",
+    "load-json-file": "6.2.0",
     "node-loader": "2.0.0",
-    "rimraf": "3.0.2",
+    "rimraf": "4.1.2",
     "style-loader": "3.3.1",
     "ts-loader": "9.4.2",
-    "ts-node": "^10.9.1",
-    "typescript": "4.9.4"
+    "ts-node": "10.9.1",
+    "typescript": "4.9.5"
   }
 }
