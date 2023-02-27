@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.3.0...v2.3.1) (2023-02-27)
+
+
+### Bug Fixes
+
+* normalize import paths for code replacement ([930633a](https://github.com/herberttn/bytenode-webpack-plugin/commit/930633a1710853fa08e713b9da83935a8d0b734d))
+
 # [2.3.0](https://github.com/herberttn/bytenode-webpack-plugin/compare/v2.2.0...v2.3.0) (2022-12-14)
 
 
