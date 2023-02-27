@@ -69,6 +69,31 @@ describe('utils', () => {
         expect(toSiblingRelativeFileLocation('/a/b/c/index.json')).toBe('./index.json');
       });
 
+      describe('normalizeCodePath', () => {
+        const windowsMatrix: Array<[string, string, string]> = [
+          ['absolute backwards', 'A:\\b\\c', 'A:\\\\b\\\\c'],
+          ['absolute forwards', 'A:/b/c', 'A:\\\\b\\\\c'],
+          ['relative backwards', '.\\a\\b\\c', './a/b/c'],
+          ['relative forwards', './a/b/c', './a/b/c'],
+        ];
+
+        const unixMatrix: Array<[string, string, string]> = [
+          ['absolute backwards', '\\a\\b\\c', '/a/b/c'],
+          ['absolute forwards', '/a/b/c', '/a/b/c'],
+          ['relative backwards', '.\\a\\b\\c', './a/b/c'],
+          ['relative forwards', './a/b/c', './a/b/c'],
+        ];
+
+        const matrix = platform === 'win32'
+          ? windowsMatrix
+          : unixMatrix;
+
+        test.each(matrix)('%s', async (_, from, to) => {
+          const { normalizeCodePath } = await import('../src/utils');
+          return expect(normalizeCodePath(from)).toBe(to);
+        });
+      });
+
     });
   }
 

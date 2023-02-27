@@ -1,7 +1,4 @@
-import { platform } from 'os';
-import { win32 } from 'path';
-
-import slash from 'slash';
+import { normalizeCodePath } from './utils';
 
 interface LoaderOptions {
   imports: string[];
@@ -30,8 +27,8 @@ function createLoaderCode(options: LoaderOptions): string {
 
   let { imports } = options;
 
-  // normalize relative paths
-  imports = imports.map(path => normalizeRelativePath(path));
+  // normalize paths
+  imports = imports.map(path => normalizeCodePath(path));
 
   // bytenode should be imported before any compiled file
   imports.unshift('bytenode');
@@ -41,20 +38,8 @@ function createLoaderCode(options: LoaderOptions): string {
     .join('\n');
 }
 
-function normalizeRelativePath(relativePath: string): string {
-  if (/win32/.test(platform()) && win32.isAbsolute(relativePath)) {
-    relativePath = win32.normalize(relativePath);
-    relativePath = relativePath.replace(/\\/g, '\\\\');
-  } else {
-    relativePath = slash(relativePath);
-  }
-
-  return relativePath;
-}
-
 export {
   createLoaderCode,
-  normalizeRelativePath,
 };
 
 export type {

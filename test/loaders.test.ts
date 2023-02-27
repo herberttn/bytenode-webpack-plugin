@@ -26,45 +26,8 @@ describe('loaders', () => {
         testLoaderOptions(createLoaderCode);
       });
 
-      describe('normalizeRelativePath', () => {
-        const matrix: Array<[string, string, string]> = [
-          ['absolute backwards', '\\a\\b\\c', '/a/b/c'],
-          ['absolute forwards', '/a/b/c', '/a/b/c'],
-          ['relative backwards', '.\\a\\b\\c', './a/b/c'],
-          ['relative forwards', './a/b/c', './a/b/c'],
-        ];
-
-        test.each(matrix)('%s', async (_, from, to) => {
-          const { normalizeRelativePath } = await import('../src/loaders');
-          return expect(normalizeRelativePath(from)).toBe(to);
-        });
-      });
-
     });
   }
-
-  describe('win32', () => {
-
-    beforeAll(async () => {
-      jest.resetModules();
-      await mockPlatform('win32');
-    });
-
-    describe('normalizeRelativePath', () => {
-      const matrix: Array<[string, string, string]> = [
-        ['absolute backwards', 'A:\\b\\c', 'A:\\\\b\\\\c'],
-        ['absolute forwards', 'A:/b/c', 'A:\\\\b\\\\c'],
-        ['relative backwards', '.\\a\\b\\c', './a/b/c'],
-        ['relative forwards', './a/b/c', './a/b/c'],
-      ];
-
-      test.each(matrix)('%s', async (_, from, to) => {
-        const { normalizeRelativePath } = await import('../src/loaders');
-        return expect(normalizeRelativePath(from)).toBe(to);
-      });
-    });
-
-  });
 
 });
 

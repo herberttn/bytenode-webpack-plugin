@@ -16,7 +16,7 @@ env:
   coveralls_runner: ubuntu-latest
 
 jobs:
-  blt:
+  build-lint-test:
     name: BLT
     runs-on: ${{ matrix.runner }}
     strategy:
@@ -45,8 +45,9 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ github.token }}
-  example:
-    name: Example
+  examples:
+    name: E
+    needs: build-lint-test
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false

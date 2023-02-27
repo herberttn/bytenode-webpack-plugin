@@ -1,4 +1,5 @@
-import { basename, extname } from 'path';
+import { platform } from 'os';
+import { basename, extname, win32 } from 'path';
 
 import picomatch from 'picomatch';
 import slash from 'slash';
@@ -72,6 +73,25 @@ function isTargetExtension(file: string): boolean {
   return TARGET_EXTENSION_REGEX.test(file);
 }
 
+function normalizeCodePath(path: string): string {
+  if (/win32/.test(platform()) && win32.isAbsolute(path)) {
+    return normalizeCodePathForWindows(path);
+  }
+
+  return normalizeCodePathForUnix(path);
+}
+
+function normalizeCodePathForUnix(path: string): string {
+  return slash(path);
+}
+
+function normalizeCodePathForWindows(path: string): string {
+  path = win32.normalize(path);
+  path = path.replace(/\\/g, '\\\\');
+
+  return path;
+}
+
 function toLoaderFileName(file: string): string {
   const name = basename(file);
   const pure = basename(name, extname(file));
@@ -89,6 +109,9 @@ export {
   fromTargetToCompiledExtension,
   isCompiledExtension,
   isTargetExtension,
+  normalizeCodePath,
+  normalizeCodePathForUnix,
+  normalizeCodePathForWindows,
   toLoaderFileName,
   toSiblingRelativeFileLocation,
 };

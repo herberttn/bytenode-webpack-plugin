@@ -9,7 +9,7 @@ import VirtualModulesPlugin from 'webpack-virtual-modules';
 import { createLoaderCode } from './loaders';
 import { compileSource, replaceSource } from './sources';
 import type { Options, Prepared, PreparedEntries, PreparedEntry, Source } from './types';
-import { createFileMatcher, fromTargetToCompiledExtension, isTargetExtension, toLoaderFileName, toSiblingRelativeFileLocation } from './utils';
+import { createFileMatcher, fromTargetToCompiledExtension, isTargetExtension, normalizeCodePath, normalizeCodePathForUnix, normalizeCodePathForWindows, toLoaderFileName, toSiblingRelativeFileLocation } from './utils';
 
 class BytenodeWebpackPlugin implements WebpackPluginInstance {
 
@@ -169,28 +169,46 @@ class BytenodeWebpackPlugin implements WebpackPluginInstance {
               }
 
               for (const from of target.import) {
-                logger.debug('replacing within', name);
-                logger.debug('  from:', from);
-                logger.debug('    to:', to);
-
-                raw = replaceString(raw, from, to);
+                raw = replaceImportPath(raw, name, from, to, {
+                  permutations: [
+                    normalizeCodePath,
+                  ],
+                });
               }
             }
 
             logger.debug('initializing compiled target replacer');
 
             for (const file of targetOutputFiles) {
-              logger.debug('replacing within', name);
-              logger.debug('  from:', file);
-              logger.debug('    to:', fromTargetToCompiledExtension(file));
-
-              raw = replaceString(raw, file, fromTargetToCompiledExtension(file));
+              raw = replaceImportPath(raw, name, file, fromTargetToCompiledExtension(file), {
+                permutations: [
+                  normalizeCodePathForUnix,
+                  normalizeCodePathForWindows,
+                ],
+              });
             }
 
             return raw;
           });
 
           compilation.updateAsset(name, source);
+
+          function replaceImportPath(raw: string, name: string, from: string, to: string, options?: { permutations?: Array<(path: string) => string> }): string {
+            const { permutations = [(identity: string): string => identity] } = options ?? {};
+
+            for (const transform of permutations) {
+              const fromTransformed = `${transform(from)}"`;
+              const toTransformed = `${transform(to)}"`;
+
+              logger.debug('replacing within', name);
+              logger.debug('  from:', fromTransformed);
+              logger.debug('    to:', toTransformed);
+
+              raw = replaceString(raw, fromTransformed, toTransformed);
+            }
+
+            return raw;
+          }
         }
 
       });
