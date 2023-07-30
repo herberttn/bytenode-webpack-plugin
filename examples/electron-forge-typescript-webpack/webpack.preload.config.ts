@@ -4,9 +4,6 @@ import { rules } from './webpack.shared.rules';
 import { plugins } from './webpack.shared.plugins';
 
 const preloadConfig: Configuration = {
-  entry: {
-    preload: './src/preload.ts',
-  },
   module: {
     rules,
   },
